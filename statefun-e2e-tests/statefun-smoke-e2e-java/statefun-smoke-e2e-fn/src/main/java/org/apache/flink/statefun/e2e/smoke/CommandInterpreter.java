@@ -59,8 +59,11 @@ public final class CommandInterpreter {
       VerificationResult::toByteArray,
       bytes -> VerificationResult.parser().parseFrom(bytes));
 
-  static final TypeName FLINK_SINK_EGRESS_TYPENAME =
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "flink-sink-egress");
+  static final TypeName DISCARD_EGRESS_TYPENAME =
+      TypeName.typeNameOf("statefun.smoke.e2e.types", "discard-egress");
+
+  static final TypeName VERIFICATION_EGRESS_TYPENAME =
+      TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-result-egress");
 
   public CommandInterpreter(Ids ids) {
     this.ids = Objects.requireNonNull(ids);
@@ -107,7 +110,7 @@ public final class CommandInterpreter {
             .setExpected(expected)
             .build();
     Message message =
-        MessageBuilder.forAddress(targetAddress)
+        EgressMessageBuilder.forEgress(VERIFICATION_EGRESS_TYPENAME)
             .withCustomType(VERIFICATION_RESULT_TYPE, verificationResult)
             .build();
     context.send(message);
@@ -119,7 +122,7 @@ public final class CommandInterpreter {
       @SuppressWarnings("unused") Command.SendEgress sendEgress) {
     // TODO: Not sure whether this is the desired logic.
     Message message =
-        EgressMessageBuilder.forEgress(FLINK_SINK_EGRESS_TYPENAME)
+        EgressMessageBuilder.forEgress(DISCARD_EGRESS_TYPENAME)
             .withCustomType(COMMAND_TYPE, Command.getDefaultInstance());
     context.send(message);
   }
@@ -152,7 +155,6 @@ public final class CommandInterpreter {
       ValueSpec<Long> state,
       @SuppressWarnings("unused") Context context,
       @SuppressWarnings("unused") Command.IncrementState incrementState) {
-    // updateAndGet -> get+set concurrent modification?
     AddressScopedStorage storage = context.storage();
     long n = storage.get(state).orElse(0L);
     storage.set(state, n + 1);
