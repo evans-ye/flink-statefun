@@ -120,7 +120,6 @@ public final class CommandInterpreter {
       @SuppressWarnings("unused") ValueSpec<Long> state,
       Context context,
       @SuppressWarnings("unused") Command.SendEgress sendEgress) {
-    // TODO: Not sure whether this is the desired logic.
     Message message =
         EgressMessageBuilder.forEgress(DISCARD_EGRESS_TYPENAME)
             .withCustomType(COMMAND_TYPE, Command.getDefaultInstance());
