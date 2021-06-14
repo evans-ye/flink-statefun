@@ -100,12 +100,12 @@ public final class CommandInterpreter {
       @SuppressWarnings("unused") Context context,
       Command.Verify verify) {
     AddressScopedStorage storage = context.storage();
-    Address targetAddress = new Address(Fn.TYPENAME, context.self().id());
+    int selfId = Integer.parseInt(context.self().id());
     long actual = storage.get(state).orElse(0L);
     long expected = verify.getExpected();
     VerificationResult verificationResult =
         VerificationResult.newBuilder()
-            .setId(Integer.parseInt(context.self().id()))
+            .setId(selfId)
             .setActual(actual)
             .setExpected(expected)
             .build();
