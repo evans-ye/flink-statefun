@@ -63,7 +63,7 @@ public final class CommandInterpreter {
       TypeName.typeNameOf("statefun.smoke.e2e.types", "discard-egress");
 
   static final TypeName VERIFICATION_EGRESS_TYPENAME =
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-result-egress");
+      TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-egress");
 
   public CommandInterpreter(Ids ids) {
     this.ids = Objects.requireNonNull(ids);
