@@ -15,49 +15,50 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.flink.statefun.e2e.smoke;
 
+import java.time.Duration;
+import java.util.Objects;
 import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
-import org.apache.flink.statefun.sdk.FunctionType;
 import org.apache.flink.statefun.sdk.java.*;
+import org.apache.flink.statefun.sdk.java.message.EgressMessage;
 import org.apache.flink.statefun.sdk.java.message.EgressMessageBuilder;
 import org.apache.flink.statefun.sdk.java.message.Message;
 import org.apache.flink.statefun.sdk.java.message.MessageBuilder;
 import org.apache.flink.statefun.sdk.java.types.SimpleType;
 import org.apache.flink.statefun.sdk.java.types.Type;
-import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
-
-import java.time.Duration;
-import java.util.Objects;
-
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.packProtobufMessage;
 
 public final class CommandInterpreter {
   private final Ids ids;
   private static final Duration sendAfterDelay = Duration.ofMillis(1);
 
-  static final Type<Command> COMMAND_TYPE = SimpleType.simpleImmutableTypeFrom(
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "command"),
-      Command::toByteArray,
-      bytes -> Command.parser().parseFrom(bytes));
+  static final Type<Command> COMMAND_TYPE =
+      SimpleType.simpleImmutableTypeFrom(
+          TypeName.typeNameOf("statefun.smoke.e2e.types", "command"),
+          Command::toByteArray,
+          bytes -> Command.parser().parseFrom(bytes));
 
-  static final Type<Commands> COMMANDS_TYPE = SimpleType.simpleImmutableTypeFrom(
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "commands"),
-      Commands::toByteArray,
-      bytes -> Commands.parser().parseFrom(bytes));
+  static final Type<Commands> COMMANDS_TYPE =
+      SimpleType.simpleImmutableTypeFrom(
+          TypeName.typeNameOf("statefun.smoke.e2e.types", "commands"),
+          Commands::toByteArray,
+          bytes -> Commands.parser().parseFrom(bytes));
 
-  static final Type<SourceCommand> SOURCE_COMMAND_TYPE = SimpleType.simpleImmutableTypeFrom(
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "source-command"),
-      SourceCommand::toByteArray,
-      bytes -> SourceCommand.parser().parseFrom(bytes));
+  static final Type<SourceCommand> SOURCE_COMMAND_TYPE =
+      SimpleType.simpleImmutableTypeFrom(
+          TypeName.typeNameOf("statefun.smoke.e2e.types", "source-command"),
+          SourceCommand::toByteArray,
+          bytes -> SourceCommand.parser().parseFrom(bytes));
 
-  static final Type<VerificationResult> VERIFICATION_RESULT_TYPE = SimpleType.simpleImmutableTypeFrom(
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-result"),
-      VerificationResult::toByteArray,
-      bytes -> VerificationResult.parser().parseFrom(bytes));
+  static final Type<VerificationResult> VERIFICATION_RESULT_TYPE =
+      SimpleType.simpleImmutableTypeFrom(
+          TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-result"),
+          VerificationResult::toByteArray,
+          bytes -> VerificationResult.parser().parseFrom(bytes));
 
   static final TypeName DISCARD_EGRESS_TYPENAME =
       TypeName.typeNameOf("statefun.smoke.e2e.types", "discard-egress");
@@ -96,9 +97,7 @@ public final class CommandInterpreter {
   }
 
   private void verify(
-      ValueSpec<Long> state,
-      @SuppressWarnings("unused") Context context,
-      Command.Verify verify) {
+      ValueSpec<Long> state, @SuppressWarnings("unused") Context context, Command.Verify verify) {
     AddressScopedStorage storage = context.storage();
     int selfId = Integer.parseInt(context.self().id());
     long actual = storage.get(state).orElse(0L);
@@ -109,29 +108,28 @@ public final class CommandInterpreter {
             .setActual(actual)
             .setExpected(expected)
             .build();
-    Message message =
+    EgressMessage egressMessage =
         EgressMessageBuilder.forEgress(VERIFICATION_EGRESS_TYPENAME)
             .withCustomType(VERIFICATION_RESULT_TYPE, verificationResult)
             .build();
-    context.send(message);
+    context.send(egressMessage);
   }
 
   private void sendEgress(
       @SuppressWarnings("unused") ValueSpec<Long> state,
       Context context,
       @SuppressWarnings("unused") Command.SendEgress sendEgress) {
-    Message message =
+    EgressMessage egressMessage =
         EgressMessageBuilder.forEgress(DISCARD_EGRESS_TYPENAME)
-            .withCustomType(COMMAND_TYPE, Command.getDefaultInstance());
-    context.send(message);
+            .withCustomType(COMMAND_TYPE, Command.getDefaultInstance())
+            .build();
+    context.send(egressMessage);
   }
 
   private void sendAfter(
-      @SuppressWarnings("unused") ValueSpec<Long> state,
-      Context context,
-      Command.SendAfter send) {
+      @SuppressWarnings("unused") ValueSpec<Long> state, Context context, Command.SendAfter send) {
     String id = ids.idOf(send.getTarget());
-    Address targetAddress = new Address(Fn.TYPENAME, id);
+    Address targetAddress = new Address(CommandInterpreterFn.TYPENAME, id);
     Message message =
         MessageBuilder.forAddress(targetAddress)
             .withCustomType(COMMANDS_TYPE, send.getCommands())
@@ -142,7 +140,7 @@ public final class CommandInterpreter {
   private void send(
       @SuppressWarnings("unused") ValueSpec<Long> state, Context context, Command.Send send) {
     String id = ids.idOf(send.getTarget());
-    Address targetAddress = new Address(Fn.TYPENAME, id);
+    Address targetAddress = new Address(CommandInterpreterFn.TYPENAME, id);
     Message message =
         MessageBuilder.forAddress(targetAddress)
             .withCustomType(COMMANDS_TYPE, send.getCommands())

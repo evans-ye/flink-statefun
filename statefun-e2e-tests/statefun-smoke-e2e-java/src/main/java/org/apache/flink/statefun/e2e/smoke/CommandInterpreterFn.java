@@ -15,22 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.flink.statefun.e2e.smoke;
 
+import java.util.concurrent.CompletableFuture;
 import org.apache.flink.statefun.sdk.java.*;
 import org.apache.flink.statefun.sdk.java.message.Message;
 
-import java.util.concurrent.CompletableFuture;
-
-public class Fn implements StatefulFunction {
+public class CommandInterpreterFn implements StatefulFunction {
 
   static final TypeName TYPENAME = TypeName.typeNameOf("statefun.e2e", "interpreter");
   static final ValueSpec<Long> state = ValueSpec.named("state").withLongType();
-  static final StatefulFunctionSpec SPEC = StatefulFunctionSpec.builder(TYPENAME).withSupplier(Fn::new).build();
+  static final StatefulFunctionSpec SPEC =
+      StatefulFunctionSpec.builder(TYPENAME).withSupplier(CommandInterpreterFn::new).build();
   final CommandInterpreter interpreter;
 
-  // constructor and apply impl. are binded to command interpreter, should be something like InterpreterFn
-  public Fn() {
+  public CommandInterpreterFn() {
     int numOfInstances = 2; // TODO: make this configurable.
     Ids ids = new Ids(numOfInstances);
     this.interpreter = new CommandInterpreter(ids);
