@@ -19,6 +19,7 @@
 package org.apache.flink.statefun.e2e.smoke;
 
 import io.undertow.Undertow;
+import org.apache.flink.statefun.sdk.java.StatefulFunctionSpec;
 import org.apache.flink.statefun.sdk.java.StatefulFunctions;
 import org.apache.flink.statefun.sdk.java.handler.RequestReplyHandler;
 
@@ -26,8 +27,14 @@ public class CommandInterpreterAppServer {
   public static final int PORT = 1108;
 
   public static void main(String[] args) {
+    final int numInstances = Integer.parseInt(args[0]);
+    final CommandInterpreter interpreter = new CommandInterpreter(new Ids(numInstances));
+    final StatefulFunctionSpec SPEC =
+        StatefulFunctionSpec.builder(CommandInterpreterFn.TYPENAME)
+            .withSupplier(() -> new CommandInterpreterFn(interpreter))
+            .build();
     final StatefulFunctions functions = new StatefulFunctions();
-    functions.withStatefulFunction(CommandInterpreterFn.SPEC);
+    functions.withStatefulFunction(SPEC);
 
     final RequestReplyHandler requestReplyHandler = functions.requestReplyHandler();
 
