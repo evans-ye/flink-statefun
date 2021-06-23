@@ -37,6 +37,8 @@ under the License.
         <module>statefun-sanity-e2e</module>
         <module>statefun-exactly-once-remote-e2e</module>
         <module>statefun-smoke-e2e</module>
+        <module>statefun-smoke-e2e-java</module>
+        <module>statefun-smoke-e2e-framework</module>
     </modules>
 
     <build>
