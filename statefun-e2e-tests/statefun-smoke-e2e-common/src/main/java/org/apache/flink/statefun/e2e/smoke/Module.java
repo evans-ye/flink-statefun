@@ -48,9 +48,6 @@ public class Module implements StatefulFunctionModule {
     binder.bindEgress(new SinkFunctionSpec<>(Constants.OUT, new DiscardingSink<>()));
     binder.bindIngressRouter(IN, new CommandRouter(ids));
 
-    FunctionProvider provider = new FunctionProvider(ids);
-    binder.bindFunctionProvider(Constants.FN_TYPE, provider);
-
     SocketClientSink<TypedValue> client =
         new SocketClientSink<>(
             moduleParameters.getVerificationServerHost(),
