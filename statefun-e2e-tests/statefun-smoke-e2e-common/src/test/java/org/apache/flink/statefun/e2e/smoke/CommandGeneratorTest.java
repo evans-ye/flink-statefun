@@ -15,23 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.flink.statefun.e2e.smoke;
 
-import org.apache.flink.statefun.sdk.FunctionType;
-import org.apache.flink.statefun.sdk.io.EgressIdentifier;
-import org.apache.flink.statefun.sdk.io.IngressIdentifier;
-import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
+import org.apache.commons.math3.random.JDKRandomGenerator;
+import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
+import org.junit.Test;
 
-public class Constants {
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-  public static final IngressIdentifier<TypedValue> IN =
-      new IngressIdentifier<>(TypedValue.class, "", "source");
+public class CommandGeneratorTest {
 
-  public static final EgressIdentifier<TypedValue> OUT =
-      new EgressIdentifier<>("", "sink", TypedValue.class);
+  @Test
+  public void usageExample() {
+    ModuleParameters parameters = new ModuleParameters();
+    CommandGenerator generator = new CommandGenerator(new JDKRandomGenerator(), parameters);
 
-  public static final FunctionType FN_TYPE = new FunctionType("v", "f1");
+    SourceCommand command = generator.get();
 
-  public static final EgressIdentifier<TypedValue> VERIFICATION_RESULT =
-      new EgressIdentifier<>("", "verification", TypedValue.class);
+    assertThat(command.getTarget(), notNullValue());
+    assertThat(command.getCommands(), notNullValue());
+  }
 }
