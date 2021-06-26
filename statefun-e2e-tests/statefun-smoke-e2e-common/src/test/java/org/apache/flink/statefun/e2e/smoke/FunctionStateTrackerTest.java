@@ -18,12 +18,12 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
-import org.junit.Test;
-
 import static org.apache.flink.statefun.e2e.smoke.Utils.aRelayedStateModificationCommand;
 import static org.apache.flink.statefun.e2e.smoke.Utils.aStateModificationCommand;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import org.junit.Test;
 
 public class FunctionStateTrackerTest {
 

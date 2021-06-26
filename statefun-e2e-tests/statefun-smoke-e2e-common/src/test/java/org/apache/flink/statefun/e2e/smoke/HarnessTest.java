@@ -18,15 +18,15 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
+import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
+import static org.apache.flink.statefun.e2e.smoke.Utils.startProtobufServer;
+
 import org.apache.flink.statefun.flink.harness.Harness;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
-import static org.apache.flink.statefun.e2e.smoke.Utils.startProtobufServer;
 
 public class HarnessTest {
 

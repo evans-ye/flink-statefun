@@ -20,11 +20,6 @@ package org.apache.flink.statefun.e2e.smoke;
 
 import com.google.protobuf.Message;
 import com.google.protobuf.Parser;
-import org.apache.flink.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.concurrent.ThreadSafe;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.ServerSocket;
@@ -34,6 +29,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
+import javax.annotation.concurrent.ThreadSafe;
+import org.apache.flink.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A simple threaded TCP server that is able to receive a specific Protocol Buffers message type.

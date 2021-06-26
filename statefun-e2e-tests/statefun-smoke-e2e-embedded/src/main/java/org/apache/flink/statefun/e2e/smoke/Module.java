@@ -18,11 +18,10 @@
 package org.apache.flink.statefun.e2e.smoke;
 
 import com.google.auto.service.AutoService;
+import java.util.Map;
 import org.apache.flink.statefun.sdk.spi.StatefulFunctionModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 @AutoService(StatefulFunctionModule.class)
 public class Module implements StatefulFunctionModule {
