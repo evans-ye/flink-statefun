@@ -45,8 +45,9 @@ public class CommonModule implements StatefulFunctionModule {
     Ids ids = new Ids(moduleParameters.getNumberOfFunctionInstances());
 
     binder.bindIngress(new SourceFunctionSpec<>(IN, new CommandFlinkSource(moduleParameters)));
-    binder.bindEgress(new SinkFunctionSpec<>(Constants.OUT, new DiscardingSink<>()));
     binder.bindIngressRouter(IN, new CommandRouter(ids));
+
+    binder.bindEgress(new SinkFunctionSpec<>(Constants.OUT, new DiscardingSink<>()));
 
     SocketClientSink<TypedValue> client =
         new SocketClientSink<>(
@@ -55,7 +56,6 @@ public class CommonModule implements StatefulFunctionModule {
             new VerificationResultSerializer(),
             3,
             true);
-
     binder.bindEgress(new SinkFunctionSpec<>(Constants.VERIFICATION_RESULT, client));
   }
 

@@ -25,13 +25,13 @@ import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 public class Constants {
 
   public static final IngressIdentifier<TypedValue> IN =
-      new IngressIdentifier<>(TypedValue.class, "", "source");
+      new IngressIdentifier<>(TypedValue.class, "statefun.smoke.e2e", "command-generator-source");
 
   public static final EgressIdentifier<TypedValue> OUT =
-      new EgressIdentifier<>("", "sink", TypedValue.class);
-
-  public static final FunctionType FN_TYPE = new FunctionType("v", "f1");
+      new EgressIdentifier<>("statefun.smoke.e2e", "discard-sink", TypedValue.class);
 
   public static final EgressIdentifier<TypedValue> VERIFICATION_RESULT =
-      new EgressIdentifier<>("", "verification", TypedValue.class);
+      new EgressIdentifier<>("statefun.smoke.e2e", "verification-sink", TypedValue.class);
+
+  public static final FunctionType FN_TYPE = new FunctionType("statefun.smoke.e2e", "f1");
 }
