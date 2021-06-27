@@ -33,6 +33,6 @@ public class Constants {
   public static final EgressIdentifier<TypedValue> VERIFICATION_RESULT =
       new EgressIdentifier<>("statefun.smoke.e2e", "verification-sink", TypedValue.class);
 
-  // For embedded/remote functions to hook up with common smoke e2e testing framework
+  // For embedded/remote functions to bind with the smoke-e2e-common testing framework
   public static final FunctionType FN_TYPE = new FunctionType("statefun.smoke.e2e", "f1");
 }
