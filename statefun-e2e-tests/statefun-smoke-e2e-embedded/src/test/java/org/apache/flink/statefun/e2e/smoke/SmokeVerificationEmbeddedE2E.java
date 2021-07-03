@@ -23,15 +23,17 @@ import org.junit.Test;
 
 public class SmokeVerificationEmbeddedE2E {
 
+  private static final int NUM_WORKERS = 2;
+
   @Test(timeout = 1_000 * 60 * 10)
   public void runWith() throws Throwable {
     ModuleParameters parameters = new ModuleParameters();
-    parameters.setNumberOfFunctionInstances(3);
-    parameters.setMessageCount(100);
+    parameters.setNumberOfFunctionInstances(128);
+    parameters.setMessageCount(100_000);
     parameters.setMaxFailures(1);
 
     StatefulFunctionsAppContainers.Builder builder =
-        StatefulFunctionsAppContainers.builder("smoke", 2);
+        StatefulFunctionsAppContainers.builder("smoke-e2e-embedded", NUM_WORKERS);
 
     SmokeRunner.run(parameters, builder);
   }

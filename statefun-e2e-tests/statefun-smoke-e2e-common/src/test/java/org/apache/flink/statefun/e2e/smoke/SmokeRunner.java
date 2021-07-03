@@ -33,7 +33,9 @@ import org.testcontainers.Testcontainers;
 public final class SmokeRunner {
   private static final Logger LOG = LoggerFactory.getLogger(SmokeRunner.class);
 
-  public static void run(ModuleParameters parameters, StatefulFunctionsAppContainers.Builder builder) throws Throwable {
+  public static void run(
+      ModuleParameters parameters, StatefulFunctionsAppContainers.Builder builder)
+      throws Throwable {
     // start verification server
     SimpleVerificationServer.StartedServer<TypedValue> server = startVerificationServer();
     parameters.setVerificationServerHost("host.testcontainers.internal");

@@ -24,7 +24,7 @@ import org.apache.flink.statefun.sdk.java.StatefulFunctions;
 import org.apache.flink.statefun.sdk.java.handler.RequestReplyHandler;
 
 public class CommandInterpreterAppServer {
-  public static final int PORT = 1108;
+  public static final int PORT = 8000;
 
   public static void main(String[] args) {
     final int numInstances = Integer.parseInt(args[0]);
