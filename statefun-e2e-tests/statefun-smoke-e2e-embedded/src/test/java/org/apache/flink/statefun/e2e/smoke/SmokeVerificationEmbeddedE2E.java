@@ -18,17 +18,21 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
+import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
 import org.junit.Test;
 
-public class SmokeVerificationE2E {
+public class SmokeVerificationEmbeddedE2E {
 
   @Test(timeout = 1_000 * 60 * 10)
   public void runWith() throws Throwable {
     ModuleParameters parameters = new ModuleParameters();
-    parameters.setNumberOfFunctionInstances(128);
-    parameters.setMessageCount(100_000);
+    parameters.setNumberOfFunctionInstances(3);
+    parameters.setMessageCount(100);
     parameters.setMaxFailures(1);
 
-    SmokeRunner.run(parameters);
+    StatefulFunctionsAppContainers.Builder builder =
+        StatefulFunctionsAppContainers.builder("smoke", 2);
+
+    SmokeRunner.run(parameters, builder);
   }
 }
