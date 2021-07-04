@@ -28,7 +28,7 @@ public class Constants {
   public static final String INGRESS_NAME = "command-generator-source";
   public static final String EGRESS_NAME = "discard-sink";
   public static final String VERIFICATION_EGRESS_NAME = "verification-sink";
-  public static final String FUNCTION_NAME = "f1";
+  public static final String FUNCTION_NAME = "command-interpreter-fn";
 
   public static final IngressIdentifier<TypedValue> IN =
       new IngressIdentifier<>(TypedValue.class, NAMESPACE, INGRESS_NAME);

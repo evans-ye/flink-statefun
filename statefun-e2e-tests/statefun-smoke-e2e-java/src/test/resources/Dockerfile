@@ -17,4 +17,5 @@ FROM flink-statefun:3.1-SNAPSHOT
 
 RUN mkdir -p /opt/statefun/modules/statefun-smoke-e2e
 COPY statefun-smoke-e2e*.jar /opt/statefun/modules/statefun-smoke-e2e/
+COPY remote-module/ /opt/statefun/modules/statefun-smoke-e2e/
 COPY flink-conf.yaml $FLINK_HOME/conf/flink-conf.yaml

@@ -27,7 +27,8 @@ import org.apache.flink.statefun.sdk.java.message.Message;
 
 public class CommandInterpreterFn implements StatefulFunction {
 
-  static final TypeName TYPENAME = TypeName.typeNameOf("statefun.e2e", "interpreter");
+  static final TypeName TYPENAME =
+      TypeName.typeNameOf(Constants.NAMESPACE, Constants.FUNCTION_NAME);
   static final ValueSpec<Long> state = ValueSpec.named("state").withLongType();
   final CommandInterpreter interpreter;
 

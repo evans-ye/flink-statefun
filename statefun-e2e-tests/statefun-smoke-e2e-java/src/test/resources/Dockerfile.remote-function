@@ -18,9 +18,8 @@ FROM openjdk:8
 
 RUN mkdir -p /app
 WORKDIR /app
-COPY statefun-smoke-e2e*.jar /app
+COPY statefun-smoke-e2e-*-jar-with-dependencies.jar /app/
 
 EXPOSE 8000
-ARG NUM_FN_INSTANCES
-CMD java -jar statefun-smoke-e2e*.jar $NUM_FN_INSTANCES
+# CMD java -jar /app/statefun-smoke-e2e-*-jar-with-dependencies.jar "${NUM_FN_INSTANCES}"
 

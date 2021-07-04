@@ -38,11 +38,13 @@ public class CommandInterpreterAppServer {
 
     final RequestReplyHandler requestReplyHandler = functions.requestReplyHandler();
 
+    System.out.println("numInstances=" + numInstances);
+
     // Use the request-reply handler along with your favorite HTTP web server framework
     // to serve the functions!
     final Undertow httpServer =
         Undertow.builder()
-            .addHttpListener(PORT, "localhost")
+            .addHttpListener(PORT, "0.0.0.0")
             .setHandler(new UndertowHttpHandler(requestReplyHandler))
             .build();
     httpServer.start();
