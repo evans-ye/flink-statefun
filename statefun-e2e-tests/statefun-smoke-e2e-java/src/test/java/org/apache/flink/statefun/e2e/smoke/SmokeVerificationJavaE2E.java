@@ -18,17 +18,15 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
-import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class SmokeVerificationJavaE2E {
 
@@ -46,6 +44,7 @@ public class SmokeVerificationJavaE2E {
     Path targetDirPath = Paths.get(System.getProperty("user.dir") + "/target/");
     ImageFromDockerfile remoteFunctionImage =
         new ImageFromDockerfile("remote-function")
+            .withDockerfile(Paths.get("Dockerfile.remote-function"))
             .withFileFromClasspath("Dockerfile", "Dockerfile.remote-function")
             .withFileFromPath(".", targetDirPath)
             .withBuildArg("NUM_FN_INSTANCES", Integer.toString(NUM_FN_INSTANCES));
@@ -60,6 +59,6 @@ public class SmokeVerificationJavaE2E {
             .dependsOn(remoteFunction)
             .withBuildContextFileFromClasspath("remote-module", "/remote-module/");
 
-    SmokeRunner.run(parameters, builder);
+    SmokeRunner.run(parameters, builder, false);
   }
 }

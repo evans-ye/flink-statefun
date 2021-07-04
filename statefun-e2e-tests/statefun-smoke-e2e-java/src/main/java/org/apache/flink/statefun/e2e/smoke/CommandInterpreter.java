@@ -38,33 +38,33 @@ public final class CommandInterpreter {
 
   static final Type<Command> COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "command"),
+          TypeName.typeNameOf(Constants.NAMESPACE, "command"),
           Command::toByteArray,
           bytes -> Command.parser().parseFrom(bytes));
 
   static final Type<Commands> COMMANDS_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "commands"),
+          TypeName.typeNameOf(Constants.NAMESPACE, "commands"),
           Commands::toByteArray,
           bytes -> Commands.parser().parseFrom(bytes));
 
   static final Type<SourceCommand> SOURCE_COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "source-command"),
+          TypeName.typeNameOf(Constants.NAMESPACE, "source-command"),
           SourceCommand::toByteArray,
           bytes -> SourceCommand.parser().parseFrom(bytes));
 
   static final Type<VerificationResult> VERIFICATION_RESULT_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-result"),
+          TypeName.typeNameOf(Constants.NAMESPACE, "verification-result"),
           VerificationResult::toByteArray,
           bytes -> VerificationResult.parser().parseFrom(bytes));
 
   static final TypeName DISCARD_EGRESS_TYPENAME =
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "discard-egress");
+      TypeName.typeNameOf(Constants.NAMESPACE, Constants.EGRESS_NAME);
 
   static final TypeName VERIFICATION_EGRESS_TYPENAME =
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-egress");
+      TypeName.typeNameOf(Constants.NAMESPACE, Constants.VERIFICATION_EGRESS_NAME);
 
   public CommandInterpreter(Ids ids) {
     this.ids = Objects.requireNonNull(ids);
