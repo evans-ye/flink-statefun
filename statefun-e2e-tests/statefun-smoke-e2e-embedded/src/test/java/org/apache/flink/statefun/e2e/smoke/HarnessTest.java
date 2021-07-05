@@ -21,6 +21,7 @@ package org.apache.flink.statefun.e2e.smoke;
 import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
 import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
 
+import com.google.protobuf.Message;
 import org.apache.flink.statefun.flink.harness.Harness;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 import org.junit.Ignore;
@@ -51,8 +52,7 @@ public class HarnessTest {
     harness.withConfiguration("state.checkpoints.dir", "file:///tmp/checkpoints");
 
     // start the Protobuf server
-    SimpleVerificationServer.StartedServer<TypedValue> started =
-        startVerificationServer(TypedValue.parser());
+    SimpleVerificationServer.StartedServer<? extends Message> started = startVerificationServer(TypedValue.parser());
 
     // configure test parameters.
     ModuleParameters parameters = new ModuleParameters();
