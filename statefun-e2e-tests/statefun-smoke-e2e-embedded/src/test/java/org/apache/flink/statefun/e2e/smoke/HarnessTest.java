@@ -52,7 +52,8 @@ public class HarnessTest {
     harness.withConfiguration("state.checkpoints.dir", "file:///tmp/checkpoints");
 
     // start the Protobuf server
-    SimpleVerificationServer.StartedServer<? extends Message> started = startVerificationServer(TypedValue.parser());
+    SimpleVerificationServer.StartedServer<? extends Message> started =
+        startVerificationServer(TypedValue.parser());
 
     // configure test parameters.
     ModuleParameters parameters = new ModuleParameters();

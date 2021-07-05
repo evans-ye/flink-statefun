@@ -93,7 +93,8 @@ class Utils {
   }
 
   /** starts a simple verification TCP server that accepts {@link com.google.protobuf.Any}. */
-  static SimpleVerificationServer.StartedServer<? extends Message> startVerificationServer(Parser parser) {
+  static SimpleVerificationServer.StartedServer<? extends Message> startVerificationServer(
+      Parser parser) {
     SimpleVerificationServer<? extends Message> server = new SimpleVerificationServer<>(parser);
     return server.start();
   }
