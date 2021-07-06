@@ -29,12 +29,13 @@ public class CommandInterpreterAppServer {
   public static void main(String[] args) {
     final int numInstances = Integer.parseInt(args[0]);
     final CommandInterpreter interpreter = new CommandInterpreter(new Ids(numInstances));
-    final StatefulFunctionSpec SPEC =
+    final StatefulFunctionSpec FN_SPEC =
         StatefulFunctionSpec.builder(CommandInterpreterFn.TYPENAME)
             .withSupplier(() -> new CommandInterpreterFn(interpreter))
+            .withValueSpec(CommandInterpreterFn.STATE)
             .build();
     final StatefulFunctions functions = new StatefulFunctions();
-    functions.withStatefulFunction(SPEC);
+    functions.withStatefulFunction(FN_SPEC);
 
     final RequestReplyHandler requestReplyHandler = functions.requestReplyHandler();
 

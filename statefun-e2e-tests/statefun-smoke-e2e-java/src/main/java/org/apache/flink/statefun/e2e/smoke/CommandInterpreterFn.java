@@ -27,10 +27,10 @@ import org.apache.flink.statefun.sdk.java.message.Message;
 
 public class CommandInterpreterFn implements StatefulFunction {
 
-  static final TypeName TYPENAME =
+  public static final TypeName TYPENAME =
       TypeName.typeNameOf(Constants.NAMESPACE, Constants.FUNCTION_NAME);
-  static final ValueSpec<Long> state = ValueSpec.named("state").withLongType();
-  final CommandInterpreter interpreter;
+  public static final ValueSpec<Long> STATE = ValueSpec.named("state").withLongType();
+  private final CommandInterpreter interpreter;
 
   public CommandInterpreterFn(CommandInterpreter interpreter) {
     this.interpreter = interpreter;
@@ -38,7 +38,7 @@ public class CommandInterpreterFn implements StatefulFunction {
 
   @Override
   public CompletableFuture<Void> apply(Context context, Message message) throws Throwable {
-    interpreter.interpret(state, context, message);
+    interpreter.interpret(STATE, context, message);
     return context.done();
   }
 }

@@ -25,7 +25,7 @@ import org.apache.flink.statefun.sdk.state.PersistedValue;
 
 public class Fn implements StatefulFunction {
 
-  @Persisted private final PersistedValue<Long> state = PersistedValue.of("state", Long.class);
+  @Persisted private final PersistedValue<Long> STATE = PersistedValue.of("state", Long.class);
   private final CommandInterpreter interpreter;
 
   public Fn(CommandInterpreter interpreter) {
@@ -34,6 +34,6 @@ public class Fn implements StatefulFunction {
 
   @Override
   public void invoke(Context context, Object message) {
-    interpreter.interpret(state, context, message);
+    interpreter.interpret(STATE, context, message);
   }
 }

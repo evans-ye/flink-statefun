@@ -87,8 +87,11 @@ class Utils {
     if (message instanceof TypedValue) {
       return TypedValueUtil.unpackProtobufMessage(
           (TypedValue) message, VerificationResult.parser());
+    } else if (message instanceof VerificationResult) {
+      return (VerificationResult) message;
     } else {
-      throw new RuntimeException(message.getClass().getCanonicalName()); // TODO:
+      throw new IllegalArgumentException(
+          "Unrecognized message type " + message.getDescriptorForType().getFullName());
     }
   }
 
