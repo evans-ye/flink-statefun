@@ -59,6 +59,6 @@ public class SmokeVerificationJavaE2E {
             .dependsOn(remoteFunction)
             .withBuildContextFileFromClasspath("remote-module", "/remote-module/");
 
-    SmokeRunner.run(parameters, builder, false);
+    SmokeRunner.run(parameters, builder);
   }
 }

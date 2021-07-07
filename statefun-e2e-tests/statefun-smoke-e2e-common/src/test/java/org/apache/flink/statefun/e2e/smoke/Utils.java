@@ -18,7 +18,6 @@
 package org.apache.flink.statefun.e2e.smoke;
 
 import com.google.protobuf.Message;
-import com.google.protobuf.Parser;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -64,11 +63,12 @@ class Utils {
 
   /** Blocks the currently executing thread until enough successful verification results supply. */
   static void awaitVerificationSuccess(
-      Supplier<? extends Message> results, final int numberOfFunctionInstances) {
+      Supplier<TypedValue> results, final int numberOfFunctionInstances) {
     Set<Integer> successfullyVerified = new HashSet<>();
     while (successfullyVerified.size() != numberOfFunctionInstances) {
-      Message message = results.get();
-      VerificationResult result = deserializeVerificationResult(message);
+      TypedValue typedValue = results.get();
+      VerificationResult result =
+          TypedValueUtil.unpackProtobufMessage(typedValue, VerificationResult.parser());
       if (result.getActual() == result.getExpected()) {
         successfullyVerified.add(result.getId());
       } else if (result.getActual() > result.getExpected()) {
@@ -83,22 +83,9 @@ class Utils {
     }
   }
 
-  static VerificationResult deserializeVerificationResult(Message message) {
-    if (message instanceof TypedValue) {
-      return TypedValueUtil.unpackProtobufMessage(
-          (TypedValue) message, VerificationResult.parser());
-    } else if (message instanceof VerificationResult) {
-      return (VerificationResult) message;
-    } else {
-      throw new IllegalArgumentException(
-          "Unrecognized message type " + message.getDescriptorForType().getFullName());
-    }
-  }
-
   /** starts a simple verification TCP server that accepts {@link com.google.protobuf.Any}. */
-  static SimpleVerificationServer.StartedServer<? extends Message> startVerificationServer(
-      Parser parser) {
-    SimpleVerificationServer<? extends Message> server = new SimpleVerificationServer<>(parser);
+  static SimpleVerificationServer.StartedServer<TypedValue> startVerificationServer() {
+    SimpleVerificationServer<TypedValue> server = new SimpleVerificationServer<>(TypedValue.parser());
     return server.start();
   }
 }

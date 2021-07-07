@@ -35,6 +35,6 @@ public class SmokeVerificationEmbeddedE2E {
     StatefulFunctionsAppContainers.Builder builder =
         StatefulFunctionsAppContainers.builder("smoke-e2e-embedded", NUM_WORKERS);
 
-    SmokeRunner.run(parameters, builder, true);
+    SmokeRunner.run(parameters, builder);
   }
 }

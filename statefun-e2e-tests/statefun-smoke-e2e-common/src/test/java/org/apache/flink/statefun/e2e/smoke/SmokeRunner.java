@@ -21,9 +21,7 @@ package org.apache.flink.statefun.e2e.smoke;
 import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
 import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
 
-import com.google.protobuf.Message;
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
-import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 import org.apache.flink.util.function.ThrowingRunnable;
 import org.junit.runner.Description;
@@ -37,16 +35,10 @@ public final class SmokeRunner {
 
   public static void run(
       ModuleParameters parameters,
-      StatefulFunctionsAppContainers.Builder builder,
-      boolean isEmbeddedFunction)
+      StatefulFunctionsAppContainers.Builder builder)
       throws Throwable {
     // start verification server
-    SimpleVerificationServer.StartedServer<? extends Message> server;
-    if (isEmbeddedFunction) {
-      server = startVerificationServer(TypedValue.parser());
-    } else {
-      server = startVerificationServer(VerificationResult.parser());
-    }
+    SimpleVerificationServer.StartedServer<TypedValue> server = startVerificationServer();
     parameters.setVerificationServerHost("host.testcontainers.internal");
     parameters.setVerificationServerPort(server.port());
     Testcontainers.exposeHostPorts(server.port());
