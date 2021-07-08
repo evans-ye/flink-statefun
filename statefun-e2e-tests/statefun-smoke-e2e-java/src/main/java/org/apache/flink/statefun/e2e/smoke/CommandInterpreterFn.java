@@ -15,25 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.flink.statefun.e2e.smoke;
 
-import java.util.Objects;
-import org.apache.flink.statefun.sdk.Context;
-import org.apache.flink.statefun.sdk.StatefulFunction;
-import org.apache.flink.statefun.sdk.annotations.Persisted;
-import org.apache.flink.statefun.sdk.state.PersistedValue;
+import java.util.concurrent.CompletableFuture;
+import org.apache.flink.statefun.sdk.java.Context;
+import org.apache.flink.statefun.sdk.java.StatefulFunction;
+import org.apache.flink.statefun.sdk.java.TypeName;
+import org.apache.flink.statefun.sdk.java.ValueSpec;
+import org.apache.flink.statefun.sdk.java.message.Message;
 
-public class Fn implements StatefulFunction {
+public class CommandInterpreterFn implements StatefulFunction {
 
-  @Persisted private final PersistedValue<Long> STATE = PersistedValue.of("state", Long.class);
+  public static final TypeName TYPENAME =
+      TypeName.typeNameOf(Constants.NAMESPACE, Constants.FUNCTION_NAME);
+  public static final ValueSpec<Long> STATE = ValueSpec.named("state").withLongType();
   private final CommandInterpreter interpreter;
 
-  public Fn(CommandInterpreter interpreter) {
-    this.interpreter = Objects.requireNonNull(interpreter);
+  public CommandInterpreterFn(CommandInterpreter interpreter) {
+    this.interpreter = interpreter;
   }
 
   @Override
-  public void invoke(Context context, Object message) {
+  public CompletableFuture<Void> apply(Context context, Message message) throws Throwable {
     interpreter.interpret(STATE, context, message);
+    return context.done();
   }
 }
