@@ -328,6 +328,7 @@ public final class StatefulFunctionsAppContainers extends ExternalResource {
       final GenericContainer<?> master =
           new GenericContainer(appImage)
               .withNetwork(network)
+              .withLogConsumer(new Slf4jLogConsumer(LOG))
               .withNetworkAliases(MASTER_HOST)
               .withEnv("ROLE", "master")
               .withEnv("MASTER_HOST", MASTER_HOST)
@@ -353,6 +354,7 @@ public final class StatefulFunctionsAppContainers extends ExternalResource {
         workers.add(
             new GenericContainer(appImage)
                 .withNetwork(network)
+                .withLogConsumer(new Slf4jLogConsumer(LOG))
                 .withNetworkAliases(workerHostOf(i))
                 .withEnv("ROLE", "worker")
                 .withEnv("MASTER_HOST", MASTER_HOST));

@@ -40,6 +40,7 @@ import org.apache.flink.statefun.sdk.reqreply.generated.FromFunction;
 import org.apache.flink.statefun.sdk.reqreply.generated.ToFunction;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 import org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ByteString;
+import org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3;
 
 /**
  * A threadsafe {@linkplain RequestReplyHandler}. This handler lifecycle is bound to the entire
@@ -132,6 +133,8 @@ public final class ConcurrentRequestReplyHandler implements RequestReplyHandler 
       StatefulFunction function, ConcurrentContext context, ToFunction.Invocation invocation)
       throws Throwable {
     TypedValue argument = invocation.getArgument();
+    System.out.println("apply: " + argument.getClass().getCanonicalName());
+    System.out.println("apply: " + GeneratedMessageV3.class.getCanonicalName());
     MessageWrapper wrapper = new MessageWrapper(context.self(), argument);
     context.setCaller(sdkAddressFromProto(invocation.getCaller()));
     CompletableFuture<Void> future = function.apply(context, wrapper);

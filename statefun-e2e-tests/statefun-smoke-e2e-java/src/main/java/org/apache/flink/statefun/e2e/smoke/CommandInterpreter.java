@@ -104,6 +104,7 @@ public final class CommandInterpreter {
     int selfId = Integer.parseInt(context.self().id());
     long actual = storage.get(state).orElse(0L);
     long expected = verify.getExpected();
+    System.out.println("expected: " + expected + " actual: " + actual);
     VerificationResult verificationResult =
         VerificationResult.newBuilder()
             .setId(selfId)

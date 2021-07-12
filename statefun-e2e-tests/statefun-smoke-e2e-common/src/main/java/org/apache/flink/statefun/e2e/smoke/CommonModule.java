@@ -20,6 +20,7 @@ package org.apache.flink.statefun.e2e.smoke;
 import static org.apache.flink.statefun.e2e.smoke.Constants.IN;
 
 import com.google.auto.service.AutoService;
+import com.google.protobuf.GeneratedMessageV3;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
@@ -66,6 +67,8 @@ public class CommonModule implements StatefulFunctionModule {
     public byte[] serialize(TypedValue element) {
       try {
         ByteArrayOutputStream out = new ByteArrayOutputStream(element.getSerializedSize() + 8);
+        System.out.println("serialize: " + element.getClass().getCanonicalName());
+        System.out.println("serialize: " + GeneratedMessageV3.class.getCanonicalName());
         element.writeDelimitedTo(out);
         return out.toByteArray();
       } catch (IOException e) {

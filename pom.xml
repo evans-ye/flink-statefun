@@ -196,52 +196,6 @@ under the License.
                 </configuration>
             </plugin>
 
-            <!-- Licence -->
-            <plugin>
-                <groupId>org.apache.rat</groupId>
-                <artifactId>apache-rat-plugin</artifactId>
-                <version>0.13</version>
-                <inherited>false</inherited>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <excludes>
-                        <!-- Additional files like .gitignore etc.-->
-                        <exclude>**/.*/**</exclude>
-                        <exclude>**/*.prefs</exclude>
-                        <exclude>**/*.log</exclude>
-                        <!-- Administrative files in the main trunk. -->
-                        <exclude>**/README.md</exclude>
-                        <exclude>**/README.zh.md</exclude>
-                        <exclude>**/CODE_OF_CONDUCT.md</exclude>
-                        <exclude>.github/**</exclude>
-                        <!-- IDE files. -->
-                        <exclude>**/*.iml</exclude>
-                        <!-- Generated content -->
-                        <exclude>**/target/**</exclude>
-                        <exclude>**/_build/**</exclude>
-						<exclude>docs/static/font-awesome/**</exclude>
-						<exclude>docs/resources/**</exclude>
-						<exclude>docs/public/**</exclude>
-						<exclude>docs/themes/book/**</exclude>
-						<exclude>docs/assets/github.css</exclude>		
-						<exclude>docs/static/js/anchor.min.js</exclude>
-                        <!-- Generated code  -->
-                        <exclude>**/generated/**</exclude>
-                        <!-- Bundled license files -->
-                        <exclude>**/LICENSE*</exclude>
-                        <!-- Python venv -->
-                        <exclude>**/venv/**</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
             <!-- Java code style -->
             <plugin>
                 <groupId>com.diffplug.spotless</groupId>
