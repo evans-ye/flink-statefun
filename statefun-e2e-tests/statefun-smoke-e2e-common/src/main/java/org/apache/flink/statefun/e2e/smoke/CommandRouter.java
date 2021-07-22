@@ -19,7 +19,7 @@ package org.apache.flink.statefun.e2e.smoke;
 
 import java.util.Objects;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
-import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
+import org.apache.flink.statefun.e2e.smoke.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.FunctionType;
 import org.apache.flink.statefun.sdk.io.Router;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;

@@ -17,7 +17,6 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
-import com.google.protobuf.Message;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -25,7 +24,7 @@ import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
-import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
+import org.apache.flink.statefun.e2e.smoke.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 
 class Utils {
@@ -85,7 +84,8 @@ class Utils {
 
   /** starts a simple verification TCP server that accepts {@link com.google.protobuf.Any}. */
   static SimpleVerificationServer.StartedServer<TypedValue> startVerificationServer() {
-    SimpleVerificationServer<TypedValue> server = new SimpleVerificationServer<>(TypedValue.parser());
+    SimpleVerificationServer<TypedValue> server =
+        new SimpleVerificationServer<>(TypedValue.parser());
     return server.start();
   }
 }

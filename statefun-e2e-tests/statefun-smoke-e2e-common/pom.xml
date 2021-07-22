@@ -29,7 +29,9 @@ under the License.
 
     <properties>
         <commons-math3.version>3.5</commons-math3.version>
-        <additional-sources.dir>target/additional-sources</additional-sources.dir>
+        <protobuf.package>com.google.protobuf</protobuf.package>
+        <shaded.prefix>org.apache.flink.statefun.sdk.shaded</shaded.prefix>
+        <generated-sources.basedir>${basedir}/target/generated-sources/</generated-sources.basedir>
     </properties>
 
     <dependencies>
@@ -51,7 +53,7 @@ under the License.
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>statefun-flink-common</artifactId>
+            <artifactId>statefun-protocol-shaded</artifactId>
             <version>${project.version}</version>
         </dependency>
 
@@ -144,36 +146,7 @@ under the License.
 
     <build>
         <plugins>
-            <!--
-            The following plugin is executed in the generated-sources phase,
-            and is responsible to extract the additional *.proto files located
-            at statefun-sdk-protos.jar.
-            -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>unpack</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.apache.flink</groupId>
-                                    <artifactId>statefun-sdk-protos</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>jar</type>
-                                    <outputDirectory>${additional-sources.dir}</outputDirectory>
-                                    <includes>sdk/*.proto</includes>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+
             <!--
             The following plugin invokes protoc to generate Java classes out of the *.proto
             definitions located at: (1) src/main/protobuf (2) ${additional-sources.dir}.
@@ -193,14 +166,57 @@ under the License.
                             <includeStdTypes>true</includeStdTypes>
                             <protocVersion>${protobuf.version}</protocVersion>
                             <cleanOutputFolder>true</cleanOutputFolder>
-                            <inputDirectories>
-                                <inputDirectory>src/main/protobuf</inputDirectory>
-                                <inputDirectory>${additional-sources.dir}</inputDirectory>
-                            </inputDirectories>
                             <outputDirectory>${basedir}/target/generated-sources/protoc-jar</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <!--
+                Plugin used for relocating Protobuf dependency in child projects.
+                This defines the renaming pattern for the relocation.
+                Child projects should place sources to relocate under ${generated-sources.basedir} and
+                simply apply this plugin in their builds.
+
+                This plugin is executed during the process-sources phase, so that the final produced
+                source codes are already relocated. In contrast to the usual shading (via the
+                maven-shade-plugin, with which the relocation happens at package / JAR creation time, i.e.
+                _after_ the sources are generated) this allows IDEs to index and reference the already
+                relocated code directly across modules in a multi-module project.
+            -->
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.3</version>
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <basedir>${generated-sources.basedir}</basedir>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
+                    <replacements>
+                        <replacement>
+                            <token>([^\.])${protobuf.package}</token>
+                            <value>$1${shaded.prefix}.${protobuf.package}</value>
+                        </replacement>
+                        <replacement>
+                            <token>(public)(\W+static)?(\W+final)?(\W+class)</token>
+                            <value>@javax.annotation.Generated("proto") $1$2$3$4</value>
+                        </replacement>
+                        <!-- replacer doesn't support anchoring or negative lookbehind -->
+                        <replacement>
+                            <token>(@javax.annotation.Generated\("proto"\) ){2}</token>
+                            <value>$1</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
             </plugin>
 
             <!-- package the test jar for other modules to include -->

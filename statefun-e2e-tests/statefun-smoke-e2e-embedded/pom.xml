@@ -46,7 +46,7 @@ under the License.
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>statefun-flink-common</artifactId>
+            <artifactId>statefun-protocol-shaded</artifactId>
             <version>${project.version}</version>
         </dependency>
 

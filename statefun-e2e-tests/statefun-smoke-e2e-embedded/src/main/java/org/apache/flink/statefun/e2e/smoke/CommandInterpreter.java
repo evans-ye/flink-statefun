@@ -17,9 +17,9 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.isProtobufTypeOf;
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.packProtobufMessage;
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.unpackProtobufMessage;
+import static org.apache.flink.statefun.e2e.smoke.types.TypedValueUtil.isProtobufTypeOf;
+import static org.apache.flink.statefun.e2e.smoke.types.TypedValueUtil.packProtobufMessage;
+import static org.apache.flink.statefun.e2e.smoke.types.TypedValueUtil.unpackProtobufMessage;
 
 import java.time.Duration;
 import java.util.Objects;

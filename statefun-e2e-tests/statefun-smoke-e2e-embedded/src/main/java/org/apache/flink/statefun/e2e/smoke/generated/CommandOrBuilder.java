@@ -5,7 +5,7 @@ package org.apache.flink.statefun.e2e.smoke.generated;
 
 public interface CommandOrBuilder extends
     // @@protoc_insertion_point(interface_extends:org.apache.flink.statefun.e2e.smoke.Command)
-    com.google.protobuf.MessageOrBuilder {
+    org.apache.flink.statefun.sdk.shaded.com.google.protobuf.MessageOrBuilder {
 
   /**
    * <code>.org.apache.flink.statefun.e2e.smoke.Command.IncrementState increment = 1;</code>

@@ -24,7 +24,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
-import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
+import org.apache.flink.statefun.e2e.smoke.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.Address;
 import org.apache.flink.statefun.sdk.Context;
 import org.apache.flink.statefun.sdk.io.EgressIdentifier;

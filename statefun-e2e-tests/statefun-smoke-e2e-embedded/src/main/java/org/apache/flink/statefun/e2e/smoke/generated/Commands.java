@@ -6,13 +6,13 @@ package org.apache.flink.statefun.e2e.smoke.generated;
 /**
  * Protobuf type {@code org.apache.flink.statefun.e2e.smoke.Commands}
  */
-public  final class Commands extends
-    com.google.protobuf.GeneratedMessageV3 implements
+@javax.annotation.Generated("proto") public  final class Commands extends
+    org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3 implements
     // @@protoc_insertion_point(message_implements:org.apache.flink.statefun.e2e.smoke.Commands)
     CommandsOrBuilder {
 private static final long serialVersionUID = 0L;
   // Use Commands.newBuilder() to construct.
-  private Commands(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  private Commands(org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
   private Commands() {
@@ -20,21 +20,21 @@ private static final long serialVersionUID = 0L;
   }
 
   @Override
-  public final com.google.protobuf.UnknownFieldSet
+  public final org.apache.flink.statefun.sdk.shaded.com.google.protobuf.UnknownFieldSet
   getUnknownFields() {
     return this.unknownFields;
   }
   private Commands(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedInputStream input,
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     this();
     if (extensionRegistry == null) {
       throw new NullPointerException();
     }
     int mutable_bitField0_ = 0;
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
+    org.apache.flink.statefun.sdk.shaded.com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
       boolean done = false;
       while (!done) {
@@ -61,10 +61,10 @@ private static final long serialVersionUID = 0L;
           }
         }
       }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+    } catch (org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException e) {
       throw e.setUnfinishedMessage(this);
     } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
+      throw new org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException(
           e).setUnfinishedMessage(this);
     } finally {
       if (((mutable_bitField0_ & 0x00000001) != 0)) {
@@ -74,7 +74,7 @@ private static final long serialVersionUID = 0L;
       makeExtensionsImmutable();
     }
   }
-  public static final com.google.protobuf.Descriptors.Descriptor
+  public static final org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return CommandsOuterClass.internal_static_org_apache_flink_statefun_e2e_smoke_Commands_descriptor;
   }
@@ -134,7 +134,7 @@ private static final long serialVersionUID = 0L;
   }
 
   @Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
+  public void writeTo(org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     for (int i = 0; i < command_.size(); i++) {
       output.writeMessage(1, command_.get(i));
@@ -149,7 +149,7 @@ private static final long serialVersionUID = 0L;
 
     size = 0;
     for (int i = 0; i < command_.size(); i++) {
-      size += com.google.protobuf.CodedOutputStream
+      size += org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, command_.get(i));
     }
     size += unknownFields.getSerializedSize();
@@ -191,71 +191,71 @@ private static final long serialVersionUID = 0L;
 
   public static Commands parseFrom(
       java.nio.ByteBuffer data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
   public static Commands parseFrom(
       java.nio.ByteBuffer data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
   public static Commands parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ByteString data)
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
   public static Commands parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ByteString data,
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
   public static Commands parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
   public static Commands parseFrom(
       byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
   public static Commands parseFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
+    return org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
   public static Commands parseFrom(
       java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
+    return org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
   public static Commands parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
+    return org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
   public static Commands parseDelimitedFrom(
       java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
+    return org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
   public static Commands parseFrom(
-      com.google.protobuf.CodedInputStream input)
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
+    return org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
   public static Commands parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedInputStream input,
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
+    return org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
@@ -282,11 +282,11 @@ private static final long serialVersionUID = 0L;
   /**
    * Protobuf type {@code org.apache.flink.statefun.e2e.smoke.Commands}
    */
-  public static final class Builder extends
-      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+  @javax.annotation.Generated("proto") public static final class Builder extends
+      org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:org.apache.flink.statefun.e2e.smoke.Commands)
       CommandsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor
+    public static final org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return CommandsOuterClass.internal_static_org_apache_flink_statefun_e2e_smoke_Commands_descriptor;
     }
@@ -310,7 +310,7 @@ private static final long serialVersionUID = 0L;
       maybeForceBuilderInitialization();
     }
     private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
+      if (org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
         getCommandFieldBuilder();
       }
@@ -328,7 +328,7 @@ private static final long serialVersionUID = 0L;
     }
 
     @Override
-    public com.google.protobuf.Descriptors.Descriptor
+    public org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
       return CommandsOuterClass.internal_static_org_apache_flink_statefun_e2e_smoke_Commands_descriptor;
     }
@@ -370,34 +370,34 @@ private static final long serialVersionUID = 0L;
     }
     @Override
     public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
       return super.setField(field, value);
     }
     @Override
     public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.FieldDescriptor field) {
       return super.clearField(field);
     }
     @Override
     public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.OneofDescriptor oneof) {
       return super.clearOneof(oneof);
     }
     @Override
     public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, Object value) {
       return super.setRepeatedField(field, index, value);
     }
     @Override
     public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Descriptors.FieldDescriptor field,
         Object value) {
       return super.addRepeatedField(field, value);
     }
     @Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
+    public Builder mergeFrom(org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Message other) {
       if (other instanceof Commands) {
         return mergeFrom((Commands)other);
       } else {
@@ -427,7 +427,7 @@ private static final long serialVersionUID = 0L;
             command_ = other.command_;
             bitField0_ = (bitField0_ & ~0x00000001);
             commandBuilder_ = 
-              com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
+              org.apache.flink.statefun.sdk.shaded.com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
                  getCommandFieldBuilder() : null;
           } else {
             commandBuilder_.addAllMessages(other.command_);
@@ -446,13 +446,13 @@ private static final long serialVersionUID = 0L;
 
     @Override
     public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedInputStream input,
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       Commands parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+      } catch (org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException e) {
         parsedMessage = (Commands) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
@@ -473,7 +473,7 @@ private static final long serialVersionUID = 0L;
        }
     }
 
-    private com.google.protobuf.RepeatedFieldBuilderV3<
+    private org.apache.flink.statefun.sdk.shaded.com.google.protobuf.RepeatedFieldBuilderV3<
         Command, Command.Builder, CommandOrBuilder> commandBuilder_;
 
     /**
@@ -605,7 +605,7 @@ private static final long serialVersionUID = 0L;
         Iterable<? extends Command> values) {
       if (commandBuilder_ == null) {
         ensureCommandIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.AbstractMessageLite.Builder.addAll(
             values, command_);
         onChanged();
       } else {
@@ -689,11 +689,11 @@ private static final long serialVersionUID = 0L;
          getCommandBuilderList() {
       return getCommandFieldBuilder().getBuilderList();
     }
-    private com.google.protobuf.RepeatedFieldBuilderV3<
+    private org.apache.flink.statefun.sdk.shaded.com.google.protobuf.RepeatedFieldBuilderV3<
         Command, Command.Builder, CommandOrBuilder>
         getCommandFieldBuilder() {
       if (commandBuilder_ == null) {
-        commandBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
+        commandBuilder_ = new org.apache.flink.statefun.sdk.shaded.com.google.protobuf.RepeatedFieldBuilderV3<
             Command, Command.Builder, CommandOrBuilder>(
                 command_,
                 ((bitField0_ & 0x00000001) != 0),
@@ -705,13 +705,13 @@ private static final long serialVersionUID = 0L;
     }
     @Override
     public final Builder setUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
+        final org.apache.flink.statefun.sdk.shaded.com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.setUnknownFields(unknownFields);
     }
 
     @Override
     public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
+        final org.apache.flink.statefun.sdk.shaded.com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
 
@@ -729,23 +729,23 @@ private static final long serialVersionUID = 0L;
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Commands>
-      PARSER = new com.google.protobuf.AbstractParser<Commands>() {
+  private static final org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Parser<Commands>
+      PARSER = new org.apache.flink.statefun.sdk.shaded.com.google.protobuf.AbstractParser<Commands>() {
     @Override
     public Commands parsePartialFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.CodedInputStream input,
+        org.apache.flink.statefun.sdk.shaded.com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws org.apache.flink.statefun.sdk.shaded.com.google.protobuf.InvalidProtocolBufferException {
       return new Commands(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<Commands> parser() {
+  public static org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Parser<Commands> parser() {
     return PARSER;
   }
 
   @Override
-  public com.google.protobuf.Parser<Commands> getParserForType() {
+  public org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Parser<Commands> getParserForType() {
     return PARSER;
   }
 

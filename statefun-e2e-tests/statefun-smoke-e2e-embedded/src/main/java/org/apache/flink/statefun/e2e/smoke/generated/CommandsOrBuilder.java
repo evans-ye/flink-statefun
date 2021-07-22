@@ -5,7 +5,7 @@ package org.apache.flink.statefun.e2e.smoke.generated;
 
 public interface CommandsOrBuilder extends
     // @@protoc_insertion_point(interface_extends:org.apache.flink.statefun.e2e.smoke.Commands)
-    com.google.protobuf.MessageOrBuilder {
+    org.apache.flink.statefun.sdk.shaded.com.google.protobuf.MessageOrBuilder {
 
   /**
    * <code>repeated .org.apache.flink.statefun.e2e.smoke.Command command = 1;</code>

@@ -5,7 +5,7 @@ package org.apache.flink.statefun.e2e.smoke.generated;
 
 public interface VerificationResultOrBuilder extends
     // @@protoc_insertion_point(interface_extends:org.apache.flink.statefun.e2e.smoke.VerificationResult)
-    com.google.protobuf.MessageOrBuilder {
+    org.apache.flink.statefun.sdk.shaded.com.google.protobuf.MessageOrBuilder {
 
   /**
    * <code>int32 id = 1;</code>
