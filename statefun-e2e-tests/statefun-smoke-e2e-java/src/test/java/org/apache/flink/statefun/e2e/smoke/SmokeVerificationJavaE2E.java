@@ -18,8 +18,9 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
-import org.junit.Rule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,33 +28,31 @@ import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class SmokeVerificationJavaE2E {
 
   private static final Logger LOG = LoggerFactory.getLogger(SmokeVerificationJavaE2E.class);
   private static final String REMOTE_FUNCTION_HOST = "remote-function";
   private static final int NUM_WORKERS = 2;
-  private static final int NUM_FN_INSTANCES = 12;
 
   @Test(timeout = 1_000 * 60 * 10)
   public void runWith() throws Throwable {
     ModuleParameters parameters = new ModuleParameters();
-    parameters.setMessageCount(100);
+    parameters.setNumberOfFunctionInstances(128);
+    parameters.setMessageCount(100_000);
     parameters.setMaxFailures(1);
 
     Path targetDirPath = Paths.get(System.getProperty("user.dir") + "/target/");
     ImageFromDockerfile remoteFunctionImage =
         new ImageFromDockerfile("remote-function")
             .withFileFromClasspath("Dockerfile", "Dockerfile.remote-function")
-            .withFileFromPath(".", targetDirPath)
-            .withBuildArg("NUM_FN_INSTANCES", Integer.toString(NUM_FN_INSTANCES));
+            .withFileFromPath(".", targetDirPath);
 
     GenericContainer<?> remoteFunction =
         new GenericContainer<>(remoteFunctionImage)
             .withNetworkAliases(REMOTE_FUNCTION_HOST)
-            .withLogConsumer(new Slf4jLogConsumer(LOG));
+            .withLogConsumer(new Slf4jLogConsumer(LOG))
+            .withEnv(
+                "NUM_FN_INSTANCES", Integer.toString(parameters.getNumberOfFunctionInstances()));
 
     StatefulFunctionsAppContainers.Builder builder =
         StatefulFunctionsAppContainers.builder("smoke-e2e-java", NUM_WORKERS)

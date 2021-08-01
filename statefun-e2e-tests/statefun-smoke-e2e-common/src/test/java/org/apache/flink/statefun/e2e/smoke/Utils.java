@@ -81,7 +81,7 @@ class Utils {
     }
   }
 
-  /** starts a simple Protobuf TCP server that accepts {@link com.google.protobuf.Any}. */
+  /** starts a simple verification TCP server that accepts {@link com.google.protobuf.Any}. */
   static SimpleVerificationServer.StartedServer<TypedValue> startVerificationServer() {
     SimpleVerificationServer<TypedValue> server =
         new SimpleVerificationServer<>(TypedValue.parser());

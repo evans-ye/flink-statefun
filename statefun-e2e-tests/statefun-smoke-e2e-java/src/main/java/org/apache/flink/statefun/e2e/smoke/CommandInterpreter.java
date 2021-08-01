@@ -38,33 +38,35 @@ public final class CommandInterpreter {
 
   static final Type<Command> COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "command"),
+          TypeName.typeNameOf(Constants.PROTOBUF_NAMESPACE, Command.getDescriptor().getFullName()),
           Command::toByteArray,
-          bytes -> Command.parser().parseFrom(bytes));
+          Command::parseFrom);
 
   static final Type<Commands> COMMANDS_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "commands"),
+          TypeName.typeNameOf(Constants.PROTOBUF_NAMESPACE, Commands.getDescriptor().getFullName()),
           Commands::toByteArray,
-          bytes -> Commands.parser().parseFrom(bytes));
+          Commands::parseFrom);
 
   static final Type<SourceCommand> SOURCE_COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "source-command"),
+          TypeName.typeNameOf(
+              Constants.PROTOBUF_NAMESPACE, SourceCommand.getDescriptor().getFullName()),
           SourceCommand::toByteArray,
-          bytes -> SourceCommand.parser().parseFrom(bytes));
+          SourceCommand::parseFrom);
 
   static final Type<VerificationResult> VERIFICATION_RESULT_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-result"),
+          TypeName.typeNameOf(
+              Constants.PROTOBUF_NAMESPACE, VerificationResult.getDescriptor().getFullName()),
           VerificationResult::toByteArray,
-          bytes -> VerificationResult.parser().parseFrom(bytes));
+          VerificationResult::parseFrom);
 
   static final TypeName DISCARD_EGRESS_TYPENAME =
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "discard-egress");
+      TypeName.typeNameOf(Constants.NAMESPACE, Constants.EGRESS_NAME);
 
   static final TypeName VERIFICATION_EGRESS_TYPENAME =
-      TypeName.typeNameOf("statefun.smoke.e2e.types", "verification-egress");
+      TypeName.typeNameOf(Constants.NAMESPACE, Constants.VERIFICATION_EGRESS_NAME);
 
   public CommandInterpreter(Ids ids) {
     this.ids = Objects.requireNonNull(ids);
@@ -76,7 +78,7 @@ public final class CommandInterpreter {
     } else if (message.is(COMMANDS_TYPE)) {
       interpret(state, context, message.as(COMMANDS_TYPE));
     } else {
-      throw new IllegalArgumentException("Unrecognized message type!");
+      throw new IllegalArgumentException("Unrecognized message type " + message.valueTypeName());
     }
   }
 
