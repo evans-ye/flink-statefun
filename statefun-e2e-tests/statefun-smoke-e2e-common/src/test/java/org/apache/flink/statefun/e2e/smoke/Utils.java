@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
-import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
+import org.apache.flink.statefun.e2e.smoke.generated.shaded.VerificationResult;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 
 class Utils {
