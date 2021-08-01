@@ -27,7 +27,10 @@ import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.Address;
 import org.apache.flink.statefun.sdk.Context;
+<<<<<<< HEAD
 import org.apache.flink.statefun.sdk.FunctionType;
+=======
+>>>>>>> e2e_remote6
 import org.apache.flink.statefun.sdk.io.EgressIdentifier;
 import org.apache.flink.statefun.sdk.state.PersistedValue;
 import org.junit.Test;
@@ -75,6 +78,7 @@ public class CommandInterpreterTest {
     public void cancelDelayedMessage(String cancellationToken) {}
 
     @Override
+<<<<<<< HEAD
     public void send(FunctionType functionType, String id, Object message) {
       Context.super.send(functionType, id, message);
     }
@@ -90,6 +94,8 @@ public class CommandInterpreterTest {
     }
 
     @Override
+=======
+>>>>>>> e2e_remote6
     public <M, T> void registerAsyncOperation(M m, CompletableFuture<T> completableFuture) {}
   }
 }
