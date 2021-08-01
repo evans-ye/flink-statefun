@@ -32,6 +32,6 @@ public class FunctionProvider implements StatefulFunctionProvider {
   @Override
   public StatefulFunction functionOfType(FunctionType functionType) {
     CommandInterpreter interpreter = new CommandInterpreter(ids);
-    return new Fn(interpreter);
+    return new CommandInterpreterFn(interpreter);
   }
 }

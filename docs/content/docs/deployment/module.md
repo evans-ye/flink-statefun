@@ -93,8 +93,8 @@ endpoints:
   - endpoint:
     meta: 
       kind: http
-      functions: com.example/* 
     spec:
+      functions: com.example/*
       urlPathTemplate: https://bar.foo.com/{function.name}
 ```
 
@@ -155,8 +155,8 @@ It is recommended to have endpoints only specified against a namespace to enable
 endpoint:
   meta:
     kind: http
-    functions: com.example/*
   spec:
+    functions: com.example/*
 ```
 
 #### Url Path Template

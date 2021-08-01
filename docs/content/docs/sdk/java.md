@@ -112,9 +112,9 @@ public class User {
     private static final ObjectMapper mapper = new ObjectMapper();
 
     public static final Type<User> TYPE = SimpleType.simpleImmutableTypeFrom(
-        TypeName.typeNameFromString("com.example/User"),
-        mapper:writeValueAsBytes,
-        bytes -> mapper.readValue(bytes, User.class));
+            TypeName.typeNameFromString("com.example/User"),
+            mapper:writeValueAsBytes,
+    bytes ->mapper.readValue(bytes,User .class));
 
     private final String name;
 
@@ -122,8 +122,8 @@ public class User {
 
     @JsonCreator
     public User(
-        @JsonProperty("name") String name,
-        @JsonProperty("favorite_color") String favoriteColor) {
+            @JsonProperty("name") String name,
+            @JsonProperty("favorite_color") String favoriteColor) {
 
         this.name = Objects.requireNonNull(name);
         this.favoriteColor = Objects.requireNonNull(favoriteColor);
@@ -141,6 +141,7 @@ public class User {
     public String toString() {
         return "User{name=" name + ",favoriteColor=" favoriteColor + "}"
     }
+}
 ```
 
 ## State
@@ -440,6 +441,66 @@ public class UndertowMain {
 	}
 }
 ```
+
+## Unit Testing Functions
+
+The Java SDK comes with a ``TestContext``, which makes it easy to test ``StatefulFunctions`` in isolation.
+The ``TestContext`` can be instantiated without any dependencies and allows you to set an initial state. 
+After invoking the function you can assert on the (egress) messages sent by the function and its final state.
+
+```java
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.equalTo;
+
+import java.util.List;
+
+import org.apache.flink.statefun.sdk.java.Address;
+import org.apache.flink.statefun.sdk.java.message.EgressMessage;
+import org.apache.flink.statefun.sdk.java.message.Message;
+import org.apache.flink.statefun.sdk.java.message.MessageBuilder;
+import org.apache.flink.statefun.sdk.java.testing.Envelope;
+import org.apache.flink.statefun.sdk.java.testing.TestContext;
+import org.junit.Test;
+
+public class FunctionUnderTestTest {
+
+    @Test
+    public void test() throws Throwable {
+
+        // Arrange
+        Address self = new Address(..., ...);
+        Address caller = new Address(..., ...);
+
+        TestContext context = TestContext.forTargetWithCaller(self, caller);
+
+        // set initial state
+        context.storage().set(FunctionUnderTest.SOME_VALUE_SPEC,...);
+
+        // Action
+        FunctionUnderTest function = new FunctionUnderTest();
+        Message message = MessageBuilder
+                .forAddress(self)
+                .withValue("This is a message")
+                .build();
+        function.apply(context, message);
+
+        // Assert
+
+        // Assert Sent Messages
+
+        List<Envelope> expectedMessages = ...;
+        assertThat(context.getSentMessages(), containsInAnyOrder(expectedMessages.toArray()));
+
+        List<EgressEnvelope> expectedEgressMessages = ...;
+        assertThat(context.getSentEgressMessages(), containsInAnyOrder(expectedEgressMessages.toArray()));
+
+        // Assert State
+        assertThat(context.storage().get(FunctionUnderTest.SOME_VALUE_SPEC).get(), equalTo(...));
+    }
+}
+```
+
 
 ## Next Steps
 

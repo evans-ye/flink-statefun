@@ -27,6 +27,7 @@ import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.Address;
 import org.apache.flink.statefun.sdk.Context;
+import org.apache.flink.statefun.sdk.FunctionType;
 import org.apache.flink.statefun.sdk.io.EgressIdentifier;
 import org.apache.flink.statefun.sdk.state.PersistedValue;
 import org.junit.Test;
@@ -66,6 +67,27 @@ public class CommandInterpreterTest {
 
     @Override
     public void sendAfter(Duration duration, Address address, Object o) {}
+
+    @Override
+    public void sendAfter(Duration delay, Address to, Object message, String cancellationToken) {}
+
+    @Override
+    public void cancelDelayedMessage(String cancellationToken) {}
+
+    @Override
+    public void send(FunctionType functionType, String id, Object message) {
+      Context.super.send(functionType, id, message);
+    }
+
+    @Override
+    public void sendAfter(Duration delay, FunctionType functionType, String id, Object message) {
+      Context.super.sendAfter(delay, functionType, id, message);
+    }
+
+    @Override
+    public void reply(Object message) {
+      Context.super.reply(message);
+    }
 
     @Override
     public <M, T> void registerAsyncOperation(M m, CompletableFuture<T> completableFuture) {}

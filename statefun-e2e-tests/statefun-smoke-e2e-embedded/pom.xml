@@ -90,7 +90,6 @@ under the License.
             <groupId>org.apache.flink</groupId>
             <artifactId>statefun-smoke-e2e-common</artifactId>
             <version>3.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
