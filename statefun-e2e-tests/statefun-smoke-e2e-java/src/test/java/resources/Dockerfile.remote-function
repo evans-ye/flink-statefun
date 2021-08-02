@@ -23,4 +23,3 @@ COPY statefun-smoke-e2e*.jar /app
 EXPOSE 8000
 ARG NUM_FN_INSTANCES
 CMD java -jar statefun-smoke-e2e*.jar $NUM_FN_INSTANCES
-
