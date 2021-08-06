@@ -31,6 +31,7 @@ public class SmokeVerificationEmbeddedE2E {
     parameters.setNumberOfFunctionInstances(128);
     parameters.setMessageCount(100_000);
     parameters.setMaxFailures(1);
+    parameters.setAsyncOpSupported(true);
 
     StatefulFunctionsAppContainers.Builder builder =
         StatefulFunctionsAppContainers.builder("smoke-e2e-embedded", NUM_WORKERS);

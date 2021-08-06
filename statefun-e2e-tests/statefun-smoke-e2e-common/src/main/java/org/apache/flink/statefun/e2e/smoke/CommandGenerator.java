@@ -75,13 +75,16 @@ public final class CommandGenerator implements Supplier<SourceCommand> {
   }
 
   private List<Pair<Gen, Double>> randomCommandGenerators() {
-    return asList(
-        create(new StateModifyGen(), moduleParameters.getStateModificationsPr()),
-        create(new SendGen(), moduleParameters.getSendPr()),
-        create(new SendAfterGen(), moduleParameters.getSendAfterPr()),
-        create(new SendAsyncOp(), moduleParameters.getAsyncSendPr()),
-        create(new Noop(), moduleParameters.getNoopPr()),
-        create(new SendEgress(), moduleParameters.getSendEgressPr()));
+    List<Pair<Gen, Double>> list = asList(
+            create(new StateModifyGen(), moduleParameters.getStateModificationsPr()),
+            create(new SendGen(), moduleParameters.getSendPr()),
+            create(new SendAfterGen(), moduleParameters.getSendAfterPr()),
+            create(new Noop(), moduleParameters.getNoopPr()),
+            create(new SendEgress(), moduleParameters.getSendEgressPr()));
+    if (moduleParameters.isAsyncOpSupported()) {
+      list.add(create(new SendAsyncOp(), moduleParameters.getAsyncSendPr()));
+    }
+    return list;
   }
 
   interface Gen {
