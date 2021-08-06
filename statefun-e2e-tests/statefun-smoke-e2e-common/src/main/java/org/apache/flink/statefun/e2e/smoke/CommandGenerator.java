@@ -20,6 +20,7 @@ package org.apache.flink.statefun.e2e.smoke;
 import static java.util.Arrays.asList;
 import static org.apache.commons.math3.util.Pair.create;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
@@ -75,12 +76,14 @@ public final class CommandGenerator implements Supplier<SourceCommand> {
   }
 
   private List<Pair<Gen, Double>> randomCommandGenerators() {
-    List<Pair<Gen, Double>> list = asList(
-            create(new StateModifyGen(), moduleParameters.getStateModificationsPr()),
-            create(new SendGen(), moduleParameters.getSendPr()),
-            create(new SendAfterGen(), moduleParameters.getSendAfterPr()),
-            create(new Noop(), moduleParameters.getNoopPr()),
-            create(new SendEgress(), moduleParameters.getSendEgressPr()));
+    List<Pair<Gen, Double>> list =
+        new ArrayList<>(
+            asList(
+                create(new StateModifyGen(), moduleParameters.getStateModificationsPr()),
+                create(new SendGen(), moduleParameters.getSendPr()),
+                create(new SendAfterGen(), moduleParameters.getSendAfterPr()),
+                create(new Noop(), moduleParameters.getNoopPr()),
+                create(new SendEgress(), moduleParameters.getSendEgressPr())));
     if (moduleParameters.isAsyncOpSupported()) {
       list.add(create(new SendAsyncOp(), moduleParameters.getAsyncSendPr()));
     }
