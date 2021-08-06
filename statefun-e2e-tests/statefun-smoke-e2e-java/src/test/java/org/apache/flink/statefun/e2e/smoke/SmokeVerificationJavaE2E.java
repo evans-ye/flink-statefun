@@ -18,6 +18,8 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -25,9 +27,6 @@ import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class SmokeVerificationJavaE2E {
 
@@ -37,8 +36,8 @@ public class SmokeVerificationJavaE2E {
   @Test(timeout = 1_000 * 60 * 10)
   public void runWith() throws Throwable {
     ModuleParameters parameters = new ModuleParameters();
-    parameters.setNumberOfFunctionInstances(12);
-    parameters.setMessageCount(100_0);
+    parameters.setNumberOfFunctionInstances(128);
+    parameters.setMessageCount(100_000);
     parameters.setMaxFailures(1);
 
     GenericContainer<?> remoteFunction = configureRemoteFunction(parameters);
@@ -61,7 +60,6 @@ public class SmokeVerificationJavaE2E {
     return new GenericContainer<>(remoteFunctionImage)
         .withNetworkAliases("remote-function-host")
         .withLogConsumer(new Slf4jLogConsumer(LOG))
-        .withEnv(
-            "NUM_FN_INSTANCES", Integer.toString(parameters.getNumberOfFunctionInstances()));
+        .withEnv("NUM_FN_INSTANCES", Integer.toString(parameters.getNumberOfFunctionInstances()));
   }
 }
