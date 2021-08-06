@@ -32,7 +32,6 @@ import java.nio.file.Paths;
 public class SmokeVerificationJavaE2E {
 
   private static final Logger LOG = LoggerFactory.getLogger(SmokeVerificationJavaE2E.class);
-  private static final String REMOTE_FUNCTION_HOST = "remote-function";
   private static final int NUM_WORKERS = 2;
 
   @Test(timeout = 1_000 * 60 * 10)
@@ -60,7 +59,7 @@ public class SmokeVerificationJavaE2E {
             .withFileFromPath(".", targetDirPath);
 
     return new GenericContainer<>(remoteFunctionImage)
-        .withNetworkAliases(REMOTE_FUNCTION_HOST)
+        .withNetworkAliases("remote-function-host")
         .withLogConsumer(new Slf4jLogConsumer(LOG))
         .withEnv(
             "NUM_FN_INSTANCES", Integer.toString(parameters.getNumberOfFunctionInstances()));

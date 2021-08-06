@@ -25,5 +25,5 @@ module:
             kind: http
           spec:
             functions: org.apache.flink.statefun.e2e.remote/*
-            urlPathTemplate: http://remote-function:8000/service
+            urlPathTemplate: http://remote-function-host:8000/service
             maxNumBatchRequests: 10000
