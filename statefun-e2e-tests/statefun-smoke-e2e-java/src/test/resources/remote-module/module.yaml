@@ -25,5 +25,5 @@ module:
             kind: http
           spec:
             functions: statefun.smoke.e2e/*
-            urlPathTemplate: http://remote-function:8000
+            urlPathTemplate: http://remote-function-host:8000
             maxNumBatchRequests: 10000

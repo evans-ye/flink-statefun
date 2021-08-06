@@ -93,7 +93,7 @@ under the License.
 
     <build>
         <plugins>
-            <!-- jar for launching remote functions -->
+            <!-- build uber jar for launching the remote function -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -115,6 +115,22 @@ under the License.
                         <goals>
                             <goal>single</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- download smoke e2e common jar for launching flink statefun cluster -->
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
