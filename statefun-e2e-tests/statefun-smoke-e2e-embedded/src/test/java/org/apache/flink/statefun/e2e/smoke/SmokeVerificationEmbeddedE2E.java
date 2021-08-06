@@ -34,7 +34,7 @@ public class SmokeVerificationEmbeddedE2E {
     parameters.setAsyncOpSupported(true);
 
     StatefulFunctionsAppContainers.Builder builder =
-        StatefulFunctionsAppContainers.builder("smoke-e2e-embedded", NUM_WORKERS);
+        StatefulFunctionsAppContainers.builder("flink-statefun-cluster", NUM_WORKERS);
 
     SmokeRunner.run(parameters, builder);
   }

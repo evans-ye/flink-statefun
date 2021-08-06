@@ -18,8 +18,6 @@
 
 package org.apache.flink.statefun.e2e.smoke;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -27,6 +25,9 @@ import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.images.builder.ImageFromDockerfile;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class SmokeVerificationJavaE2E {
 
@@ -37,28 +38,31 @@ public class SmokeVerificationJavaE2E {
   @Test(timeout = 1_000 * 60 * 10)
   public void runWith() throws Throwable {
     ModuleParameters parameters = new ModuleParameters();
-    parameters.setNumberOfFunctionInstances(128);
-    parameters.setMessageCount(100_000);
+    parameters.setNumberOfFunctionInstances(12);
+    parameters.setMessageCount(100_0);
     parameters.setMaxFailures(1);
 
+    GenericContainer<?> remoteFunction = configureRemoteFunction(parameters);
+
+    StatefulFunctionsAppContainers.Builder builder =
+        StatefulFunctionsAppContainers.builder("flink-statefun-cluster", NUM_WORKERS)
+            .withBuildContextFileFromClasspath("remote-module", "/remote-module/")
+            .dependsOn(remoteFunction);
+
+    SmokeRunner.run(parameters, builder);
+  }
+
+  private GenericContainer<?> configureRemoteFunction(ModuleParameters parameters) {
     Path targetDirPath = Paths.get(System.getProperty("user.dir") + "/target/");
     ImageFromDockerfile remoteFunctionImage =
-        new ImageFromDockerfile("remote-function")
+        new ImageFromDockerfile("remote-function-image")
             .withFileFromClasspath("Dockerfile", "Dockerfile.remote-function")
             .withFileFromPath(".", targetDirPath);
 
-    GenericContainer<?> remoteFunction =
-        new GenericContainer<>(remoteFunctionImage)
-            .withNetworkAliases(REMOTE_FUNCTION_HOST)
-            .withLogConsumer(new Slf4jLogConsumer(LOG))
-            .withEnv(
-                "NUM_FN_INSTANCES", Integer.toString(parameters.getNumberOfFunctionInstances()));
-
-    StatefulFunctionsAppContainers.Builder builder =
-        StatefulFunctionsAppContainers.builder("smoke-e2e-java", NUM_WORKERS)
-            .dependsOn(remoteFunction)
-            .withBuildContextFileFromClasspath("remote-module", "/remote-module/");
-
-    SmokeRunner.run(parameters, builder);
+    return new GenericContainer<>(remoteFunctionImage)
+        .withNetworkAliases(REMOTE_FUNCTION_HOST)
+        .withLogConsumer(new Slf4jLogConsumer(LOG))
+        .withEnv(
+            "NUM_FN_INSTANCES", Integer.toString(parameters.getNumberOfFunctionInstances()));
   }
 }

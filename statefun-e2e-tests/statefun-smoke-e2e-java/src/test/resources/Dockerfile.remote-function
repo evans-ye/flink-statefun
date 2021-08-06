@@ -22,4 +22,3 @@ COPY statefun-smoke-e2e-*-jar-with-dependencies.jar /app/
 
 EXPOSE 8000
 CMD java -jar /app/statefun-smoke-e2e-*-jar-with-dependencies.jar "${NUM_FN_INSTANCES}"
-
