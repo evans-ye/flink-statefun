@@ -22,7 +22,6 @@ import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess
 import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
 
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
-import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 import org.apache.flink.util.function.ThrowingRunnable;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
@@ -37,7 +36,7 @@ public final class SmokeRunner {
       ModuleParameters parameters, StatefulFunctionsAppContainers.Builder builder)
       throws Throwable {
     // start verification server
-    SimpleVerificationServer.StartedServer<TypedValue> server = startVerificationServer();
+    SimpleVerificationServer.StartedServer server = startVerificationServer();
     parameters.setVerificationServerHost("host.testcontainers.internal");
     parameters.setVerificationServerPort(server.port());
     Testcontainers.exposeHostPorts(server.port());

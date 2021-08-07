@@ -17,7 +17,6 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -25,7 +24,6 @@ import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
-import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 
 class Utils {
 
@@ -62,13 +60,10 @@ class Utils {
 
   /** Blocks the currently executing thread until enough successful verification results supply. */
   static void awaitVerificationSuccess(
-      Supplier<TypedValue> results, final int numberOfFunctionInstances)
-      throws InvalidProtocolBufferException {
+      Supplier<VerificationResult> results, final int numberOfFunctionInstances) {
     Set<Integer> successfullyVerified = new HashSet<>();
     while (successfullyVerified.size() != numberOfFunctionInstances) {
-      TypedValue typedValue = results.get();
-      VerificationResult result =
-          VerificationResult.parser().parseFrom(typedValue.getValue().toByteArray());
+      VerificationResult result = results.get();
       if (result.getActual() == result.getExpected()) {
         successfullyVerified.add(result.getId());
       } else if (result.getActual() > result.getExpected()) {
@@ -84,9 +79,8 @@ class Utils {
   }
 
   /** starts a simple verification TCP server that accepts {@link com.google.protobuf.Any}. */
-  static SimpleVerificationServer.StartedServer<TypedValue> startVerificationServer() {
-    SimpleVerificationServer<TypedValue> server =
-        new SimpleVerificationServer<>(TypedValue.parser());
+  static SimpleVerificationServer.StartedServer startVerificationServer() {
+    SimpleVerificationServer server = new SimpleVerificationServer();
     return server.start();
   }
 }

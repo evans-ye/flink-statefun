@@ -28,32 +28,25 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import javax.annotation.concurrent.ThreadSafe;
-import org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Message;
-import org.apache.flink.statefun.sdk.shaded.com.google.protobuf.Parser;
+import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
 import org.apache.flink.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * A simple threaded TCP server that is able to receive a specific Protocol Buffers message type.
- *
- * @param <T> input message type.
- */
+/** A simple threaded TCP server that is able to receive {@link VerificationResult} messages. */
 @ThreadSafe
-public final class SimpleVerificationServer<T extends Message> {
+public final class SimpleVerificationServer {
   private static final Logger LOG = LoggerFactory.getLogger(SimpleVerificationServer.class);
 
-  private final LinkedBlockingDeque<T> results = new LinkedBlockingDeque<>();
+  private final LinkedBlockingDeque<VerificationResult> results = new LinkedBlockingDeque<>();
   private final ExecutorService executor;
   private final AtomicBoolean started = new AtomicBoolean(false);
-  private final Parser<T> parser;
 
-  public SimpleVerificationServer(Parser<T> parser) {
+  public SimpleVerificationServer() {
     this.executor = MoreExecutors.newCachedDaemonThreadPool();
-    this.parser = parser;
   }
 
-  StartedServer<T> start() {
+  StartedServer start() {
     if (!started.compareAndSet(false, true)) {
       throw new IllegalArgumentException("Already started.");
     }
@@ -62,13 +55,13 @@ public final class SimpleVerificationServer<T extends Message> {
       serverSocket.setReuseAddress(true);
       LOG.info("Starting server at " + serverSocket.getLocalPort());
       executor.submit(() -> acceptClients(serverSocket));
-      return new StartedServer<>(serverSocket.getLocalPort(), results());
+      return new StartedServer(serverSocket.getLocalPort(), results());
     } catch (IOException e) {
       throw new IllegalStateException("Unable to bind the TCP server.", e);
     }
   }
 
-  private Supplier<T> results() {
+  private Supplier<VerificationResult> results() {
     return () -> {
       try {
         return results.take();
@@ -94,7 +87,7 @@ public final class SimpleVerificationServer<T extends Message> {
   private void pumpVerificationResults(Socket client, InputStream input) {
     while (true) {
       try {
-        T result = parser.parseDelimitedFrom(input);
+        VerificationResult result = VerificationResult.parseDelimitedFrom(input);
         if (result != null) {
           results.add(result);
         }
@@ -110,11 +103,11 @@ public final class SimpleVerificationServer<T extends Message> {
     }
   }
 
-  public static final class StartedServer<T extends Message> {
+  public static final class StartedServer {
     private final int port;
-    private final Supplier<T> results;
+    private final Supplier<VerificationResult> results;
 
-    public StartedServer(int port, Supplier<T> results) {
+    public StartedServer(int port, Supplier<VerificationResult> results) {
       this.port = port;
       this.results = results;
     }
@@ -123,7 +116,7 @@ public final class SimpleVerificationServer<T extends Message> {
       return port;
     }
 
-    public Supplier<T> results() {
+    public Supplier<VerificationResult> results() {
       return results;
     }
   }

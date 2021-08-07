@@ -19,6 +19,7 @@
 package org.apache.flink.statefun.e2e.smoke;
 
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
+import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
 import org.apache.flink.statefun.sdk.TypeName;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 
@@ -48,6 +49,17 @@ final class Types {
     }
     try {
       return SourceCommand.parseFrom(typedValue.getValue());
+    } catch (Exception e) {
+      throw new RuntimeException("Unable to parse SourceCommand from TypedValue.", e);
+    }
+  }
+
+  static VerificationResult unpackVerificationResult(TypedValue typedValue) {
+    if (!isTypeOf(typedValue, VERIFICATION_RESULT_TYPE)) {
+      throw new IllegalStateException("Unexpected TypedValue: " + typedValue);
+    }
+    try {
+      return VerificationResult.parseFrom(typedValue.getValue());
     } catch (Exception e) {
       throw new RuntimeException("Unable to parse SourceCommand from TypedValue.", e);
     }

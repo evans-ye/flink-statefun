@@ -18,14 +18,14 @@
 package org.apache.flink.statefun.e2e.smoke;
 
 import static org.apache.flink.statefun.e2e.smoke.Constants.IN;
-import static org.apache.flink.statefun.e2e.smoke.Types.VERIFICATION_RESULT_TYPE;
-import static org.apache.flink.statefun.e2e.smoke.Types.isTypeOf;
+import static org.apache.flink.statefun.e2e.smoke.Types.unpackVerificationResult;
 
 import com.google.auto.service.AutoService;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.flink.api.common.serialization.SerializationSchema;
+import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
 import org.apache.flink.statefun.flink.io.datastream.SinkFunctionSpec;
 import org.apache.flink.statefun.flink.io.datastream.SourceFunctionSpec;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
@@ -67,9 +67,9 @@ public class DriverModule implements StatefulFunctionModule {
     @Override
     public byte[] serialize(TypedValue element) {
       try {
-        isTypeOf(element, VERIFICATION_RESULT_TYPE);
-        ByteArrayOutputStream out = new ByteArrayOutputStream(element.getSerializedSize() + 8);
-        element.writeDelimitedTo(out);
+        VerificationResult result = unpackVerificationResult(element);
+        ByteArrayOutputStream out = new ByteArrayOutputStream(result.getSerializedSize() + 8);
+        result.writeDelimitedTo(out);
         return out.toByteArray();
       } catch (IOException e) {
         throw new RuntimeException(e);
