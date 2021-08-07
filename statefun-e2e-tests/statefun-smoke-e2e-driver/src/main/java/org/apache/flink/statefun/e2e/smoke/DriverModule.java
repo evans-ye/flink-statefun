@@ -18,6 +18,8 @@
 package org.apache.flink.statefun.e2e.smoke;
 
 import static org.apache.flink.statefun.e2e.smoke.Constants.IN;
+import static org.apache.flink.statefun.e2e.smoke.Types.VERIFICATION_RESULT_TYPE;
+import static org.apache.flink.statefun.e2e.smoke.Types.isTypeOf;
 
 import com.google.auto.service.AutoService;
 import java.io.ByteArrayOutputStream;
@@ -65,6 +67,7 @@ public class DriverModule implements StatefulFunctionModule {
     @Override
     public byte[] serialize(TypedValue element) {
       try {
+        isTypeOf(element, VERIFICATION_RESULT_TYPE);
         ByteArrayOutputStream out = new ByteArrayOutputStream(element.getSerializedSize() + 8);
         element.writeDelimitedTo(out);
         return out.toByteArray();

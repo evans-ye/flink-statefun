@@ -17,6 +17,7 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
+import static org.apache.flink.statefun.e2e.smoke.Types.packSourceCommand;
 import static org.apache.flink.statefun.e2e.smoke.generated.Command.Verify;
 import static org.apache.flink.statefun.e2e.smoke.generated.Command.newBuilder;
 
@@ -37,7 +38,6 @@ import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceSnapshot;
-import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
 import org.apache.flink.streaming.api.checkpoint.CheckpointedFunction;
 import org.apache.flink.streaming.api.functions.source.RichSourceFunction;
@@ -171,7 +171,7 @@ final class CommandFlinkSource extends RichSourceFunction<TypedValue>
           return;
         }
         functionStateTracker.apply(command);
-        ctx.collect(TypedValueUtil.packProtobufMessage(command));
+        ctx.collect(packSourceCommand(command));
         this.commandsSentSoFar = i;
       }
     }
@@ -191,7 +191,7 @@ final class CommandFlinkSource extends RichSourceFunction<TypedValue>
               .setCommands(Commands.newBuilder().addCommand(verify))
               .build();
       synchronized (ctx.getCheckpointLock()) {
-        ctx.collect(TypedValueUtil.packProtobufMessage(command));
+        ctx.collect(packSourceCommand(command));
       }
     }
   }

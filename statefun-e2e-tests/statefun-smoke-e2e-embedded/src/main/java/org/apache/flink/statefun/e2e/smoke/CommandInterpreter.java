@@ -17,9 +17,13 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.isProtobufTypeOf;
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.packProtobufMessage;
-import static org.apache.flink.statefun.flink.common.types.TypedValueUtil.unpackProtobufMessage;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.COMMANDS_TYPE;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.SOURCE_COMMANDS_TYPE;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.isTypeOf;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.packCommands;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.packVerificationResult;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.unpackCommands;
+import static org.apache.flink.statefun.e2e.smoke.TypeUtils.unpackSourceCommand;
 
 import java.time.Duration;
 import java.util.Objects;
@@ -53,14 +57,14 @@ public final class CommandInterpreter {
       return;
     }
     if (!(message instanceof TypedValue)) {
-      throw new IllegalArgumentException("wtf " + message);
+      throw new IllegalStateException("Unexpected message: " + message);
     }
     TypedValue typedValue = (TypedValue) message;
-    if (isProtobufTypeOf(typedValue, SourceCommand.getDescriptor())) {
-      SourceCommand sourceCommand = unpackProtobufMessage(typedValue, SourceCommand.parser());
+    if (isTypeOf(typedValue, SOURCE_COMMANDS_TYPE)) {
+      SourceCommand sourceCommand = unpackSourceCommand(typedValue);
       interpret(state, context, sourceCommand.getCommands());
-    } else if (isProtobufTypeOf(typedValue, Commands.getDescriptor())) {
-      Commands commands = unpackProtobufMessage(typedValue, Commands.parser());
+    } else if (isTypeOf(typedValue, COMMANDS_TYPE)) {
+      Commands commands = unpackCommands(typedValue);
       interpret(state, context, commands);
     } else {
       throw new IllegalArgumentException("Unknown message type " + typedValue.getTypename());
@@ -98,7 +102,7 @@ public final class CommandInterpreter {
             .setActual(actual)
             .setExpected(expected)
             .build();
-    context.send(Constants.VERIFICATION_RESULT, packProtobufMessage(verificationResult));
+    context.send(Constants.VERIFICATION_RESULT, packVerificationResult(verificationResult));
   }
 
   private void sendEgress(
@@ -114,14 +118,14 @@ public final class CommandInterpreter {
       Command.SendAfter send) {
     FunctionType functionType = Constants.FN_TYPE;
     String id = ids.idOf(send.getTarget());
-    context.sendAfter(sendAfterDelay, functionType, id, packProtobufMessage(send.getCommands()));
+    context.sendAfter(sendAfterDelay, functionType, id, packCommands(send.getCommands()));
   }
 
   private void send(
       @SuppressWarnings("unused") PersistedValue<Long> state, Context context, Command.Send send) {
     FunctionType functionType = Constants.FN_TYPE;
     String id = ids.idOf(send.getTarget());
-    context.send(functionType, id, packProtobufMessage(send.getCommands()));
+    context.send(functionType, id, packCommands(send.getCommands()));
   }
 
   private void registerAsyncOps(

@@ -17,9 +17,10 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
+import static org.apache.flink.statefun.e2e.smoke.Types.unpackSourceCommand;
+
 import java.util.Objects;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
-import org.apache.flink.statefun.flink.common.types.TypedValueUtil;
 import org.apache.flink.statefun.sdk.FunctionType;
 import org.apache.flink.statefun.sdk.io.Router;
 import org.apache.flink.statefun.sdk.reqreply.generated.TypedValue;
@@ -33,8 +34,7 @@ public class CommandRouter implements Router<TypedValue> {
 
   @Override
   public void route(TypedValue command, Downstream<TypedValue> downstream) {
-    SourceCommand sourceCommand =
-        TypedValueUtil.unpackProtobufMessage(command, SourceCommand.parser());
+    SourceCommand sourceCommand = unpackSourceCommand(command);
     FunctionType type = Constants.FN_TYPE;
     String id = ids.idOf(sourceCommand.getTarget());
     downstream.forward(type, id, command);

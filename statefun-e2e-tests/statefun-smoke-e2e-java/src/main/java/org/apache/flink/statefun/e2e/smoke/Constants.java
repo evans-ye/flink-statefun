@@ -12,7 +12,6 @@ final class Constants {
   private Constants() {}
 
   private static final String APP_NAMESPACE = "statefun.smoke.e2e";
-  private static final String PROTO_TYPES_NAMESPACE = "type.googleapis.com";
 
   // =====================================================
   //  Egresses
@@ -36,26 +35,23 @@ final class Constants {
 
   static final Type<Command> COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(PROTO_TYPES_NAMESPACE, Command.getDescriptor().getFullName()),
-          Command::toByteArray,
-          Command::parseFrom);
+          TypeName.typeNameOf(APP_NAMESPACE, "command"), Command::toByteArray, Command::parseFrom);
 
   static final Type<Commands> COMMANDS_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(PROTO_TYPES_NAMESPACE, Commands.getDescriptor().getFullName()),
+          TypeName.typeNameOf(APP_NAMESPACE, "commands"),
           Commands::toByteArray,
           Commands::parseFrom);
 
   static final Type<SourceCommand> SOURCE_COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(PROTO_TYPES_NAMESPACE, SourceCommand.getDescriptor().getFullName()),
+          TypeName.typeNameOf(APP_NAMESPACE, "sourceCommand"),
           SourceCommand::toByteArray,
           SourceCommand::parseFrom);
 
   static final Type<VerificationResult> VERIFICATION_RESULT_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(
-              PROTO_TYPES_NAMESPACE, VerificationResult.getDescriptor().getFullName()),
+          TypeName.typeNameOf(APP_NAMESPACE, "verificationResult"),
           VerificationResult::toByteArray,
           VerificationResult::parseFrom);
 }
