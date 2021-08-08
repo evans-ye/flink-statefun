@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.driver;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import org.apache.commons.math3.random.JDKRandomGenerator;
+import org.apache.flink.statefun.e2e.smoke.common.ModuleParameters;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.junit.Test;
 

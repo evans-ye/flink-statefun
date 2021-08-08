@@ -19,6 +19,8 @@
 package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SmokeRunner;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SmokeRunnerParameters;
 import org.junit.Test;
 
 public class SmokeVerificationEmbeddedE2E {
@@ -27,7 +29,7 @@ public class SmokeVerificationEmbeddedE2E {
 
   @Test(timeout = 1_000 * 60 * 10)
   public void run() throws Throwable {
-    ModuleParameters parameters = new ModuleParameters();
+    SmokeRunnerParameters parameters = new SmokeRunnerParameters();
     parameters.setNumberOfFunctionInstances(128);
     parameters.setMessageCount(100_000);
     parameters.setMaxFailures(1);

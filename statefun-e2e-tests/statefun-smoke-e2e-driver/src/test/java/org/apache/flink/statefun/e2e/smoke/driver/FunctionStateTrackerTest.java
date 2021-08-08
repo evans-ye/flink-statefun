@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.driver;
 
-import static org.apache.flink.statefun.e2e.smoke.Utils.aRelayedStateModificationCommand;
-import static org.apache.flink.statefun.e2e.smoke.Utils.aStateModificationCommand;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.aRelayedStateModificationCommand;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.aStateModificationCommand;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 

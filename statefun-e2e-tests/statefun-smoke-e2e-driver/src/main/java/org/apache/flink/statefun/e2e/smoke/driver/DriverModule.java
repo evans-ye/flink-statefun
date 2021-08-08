@@ -15,16 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.driver;
 
-import static org.apache.flink.statefun.e2e.smoke.Constants.IN;
-import static org.apache.flink.statefun.e2e.smoke.Types.unpackVerificationResult;
+import static org.apache.flink.statefun.e2e.smoke.common.Constants.IN;
+import static org.apache.flink.statefun.e2e.smoke.common.Types.unpackVerificationResult;
 
 import com.google.auto.service.AutoService;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.flink.api.common.serialization.SerializationSchema;
+import org.apache.flink.statefun.e2e.smoke.common.Constants;
+import org.apache.flink.statefun.e2e.smoke.common.Ids;
+import org.apache.flink.statefun.e2e.smoke.common.ModuleParameters;
 import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
 import org.apache.flink.statefun.flink.io.datastream.SinkFunctionSpec;
 import org.apache.flink.statefun.flink.io.datastream.SourceFunctionSpec;

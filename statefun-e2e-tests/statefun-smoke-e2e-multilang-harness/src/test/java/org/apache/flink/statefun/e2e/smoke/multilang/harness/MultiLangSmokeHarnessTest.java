@@ -18,12 +18,12 @@
 
 package org.apache.flink.statefun.e2e.smoke.multilang.harness;
 
-import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
-import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.awaitVerificationSuccess;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.startVerificationServer;
 
-import org.apache.flink.statefun.e2e.smoke.DriverModule;
-import org.apache.flink.statefun.e2e.smoke.ModuleParameters;
-import org.apache.flink.statefun.e2e.smoke.SimpleVerificationServer;
+import org.apache.flink.statefun.e2e.smoke.driver.DriverModule;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SimpleVerificationServer;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SmokeRunnerParameters;
 import org.apache.flink.statefun.flink.harness.Harness;
 import org.apache.flink.statefun.sdk.spi.StatefulFunctionModule;
 import org.junit.Ignore;
@@ -82,7 +82,7 @@ public final class MultiLangSmokeHarnessTest {
     SimpleVerificationServer.StartedServer started = startVerificationServer();
 
     // configure test parameters.
-    ModuleParameters parameters = new ModuleParameters();
+    SmokeRunnerParameters parameters = new SmokeRunnerParameters();
     parameters.setMaxFailures(1);
     parameters.setMessageCount(100_000);
     parameters.setNumberOfFunctionInstances(128);

@@ -15,11 +15,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.driver;
 
-import static org.apache.flink.statefun.e2e.smoke.Types.unpackSourceCommand;
+import static org.apache.flink.statefun.e2e.smoke.common.Types.unpackSourceCommand;
 
 import java.util.Objects;
+import org.apache.flink.statefun.e2e.smoke.common.Constants;
+import org.apache.flink.statefun.e2e.smoke.common.Ids;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.sdk.FunctionType;
 import org.apache.flink.statefun.sdk.io.Router;

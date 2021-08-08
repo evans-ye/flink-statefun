@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.driver.testutils;
 
 import java.io.IOException;
 import java.io.InputStream;

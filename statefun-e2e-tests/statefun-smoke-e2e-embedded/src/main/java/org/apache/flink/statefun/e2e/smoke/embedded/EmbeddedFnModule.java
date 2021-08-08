@@ -19,9 +19,9 @@ package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import com.google.auto.service.AutoService;
 import java.util.Map;
-import org.apache.flink.statefun.e2e.smoke.Constants;
-import org.apache.flink.statefun.e2e.smoke.Ids;
-import org.apache.flink.statefun.e2e.smoke.ModuleParameters;
+import org.apache.flink.statefun.e2e.smoke.common.Constants;
+import org.apache.flink.statefun.e2e.smoke.common.Ids;
+import org.apache.flink.statefun.e2e.smoke.common.ModuleParameters;
 import org.apache.flink.statefun.sdk.spi.StatefulFunctionModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

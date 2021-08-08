@@ -21,6 +21,8 @@ package org.apache.flink.statefun.e2e.smoke;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SmokeRunner;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SmokeRunnerParameters;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +37,7 @@ public class SmokeVerificationJavaE2E {
 
   @Test(timeout = 1_000 * 60 * 10)
   public void runWith() throws Throwable {
-    ModuleParameters parameters = new ModuleParameters();
+    SmokeRunnerParameters parameters = new SmokeRunnerParameters();
     parameters.setNumberOfFunctionInstances(128);
     parameters.setMessageCount(100_000);
     parameters.setMaxFailures(1);
@@ -50,7 +52,7 @@ public class SmokeVerificationJavaE2E {
     SmokeRunner.run(parameters, builder);
   }
 
-  private GenericContainer<?> configureRemoteFunction(ModuleParameters parameters) {
+  private GenericContainer<?> configureRemoteFunction(SmokeRunnerParameters parameters) {
     Path targetDirPath = Paths.get(System.getProperty("user.dir") + "/target/");
     ImageFromDockerfile remoteFunctionImage =
         new ImageFromDockerfile("remote-function-image")

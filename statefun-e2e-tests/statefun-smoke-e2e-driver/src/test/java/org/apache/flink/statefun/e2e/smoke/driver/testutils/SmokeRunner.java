@@ -16,10 +16,10 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.driver.testutils;
 
-import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
-import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.awaitVerificationSuccess;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.startVerificationServer;
 
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
 import org.apache.flink.util.function.ThrowingRunnable;
@@ -33,7 +33,7 @@ public final class SmokeRunner {
   private static final Logger LOG = LoggerFactory.getLogger(SmokeRunner.class);
 
   public static void run(
-      ModuleParameters parameters, StatefulFunctionsAppContainers.Builder builder)
+      SmokeRunnerParameters parameters, StatefulFunctionsAppContainers.Builder builder)
       throws Throwable {
     // start verification server
     SimpleVerificationServer.StartedServer server = startVerificationServer();

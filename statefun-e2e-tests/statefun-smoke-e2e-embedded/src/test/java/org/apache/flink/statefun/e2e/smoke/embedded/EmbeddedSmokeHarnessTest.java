@@ -18,9 +18,11 @@
 
 package org.apache.flink.statefun.e2e.smoke.embedded;
 
-import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
-import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.awaitVerificationSuccess;
+import static org.apache.flink.statefun.e2e.smoke.driver.testutils.Utils.startVerificationServer;
 
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SimpleVerificationServer;
+import org.apache.flink.statefun.e2e.smoke.driver.testutils.SmokeRunnerParameters;
 import org.apache.flink.statefun.flink.harness.Harness;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,7 +55,7 @@ public class EmbeddedSmokeHarnessTest {
     SimpleVerificationServer.StartedServer started = startVerificationServer();
 
     // configure test parameters.
-    ModuleParameters parameters = new ModuleParameters();
+    SmokeRunnerParameters parameters = new SmokeRunnerParameters();
     parameters.setMaxFailures(1);
     parameters.setMessageCount(100_000);
     parameters.setNumberOfFunctionInstances(128);
