@@ -17,7 +17,7 @@
  */
 package org.apache.flink.statefun.e2e.smoke;
 
-final class Ids {
+public final class Ids {
   private final String[] cache;
 
   public Ids(int maxIds) {

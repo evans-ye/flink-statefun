@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import org.apache.flink.statefun.e2e.common.StatefulFunctionsAppContainers;
 import org.junit.Test;
@@ -26,7 +26,7 @@ public class SmokeVerificationEmbeddedE2E {
   private static final int NUM_WORKERS = 2;
 
   @Test(timeout = 1_000 * 60 * 10)
-  public void runWith() throws Throwable {
+  public void run() throws Throwable {
     ModuleParameters parameters = new ModuleParameters();
     parameters.setNumberOfFunctionInstances(128);
     parameters.setMessageCount(100_000);

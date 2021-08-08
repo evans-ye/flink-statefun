@@ -15,23 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import java.util.Objects;
-import org.apache.flink.statefun.sdk.FunctionType;
+import org.apache.flink.statefun.sdk.Context;
 import org.apache.flink.statefun.sdk.StatefulFunction;
-import org.apache.flink.statefun.sdk.StatefulFunctionProvider;
+import org.apache.flink.statefun.sdk.annotations.Persisted;
+import org.apache.flink.statefun.sdk.state.PersistedValue;
 
-public class FunctionProvider implements StatefulFunctionProvider {
-  private final Ids ids;
+public class CommandInterpreterFn implements StatefulFunction {
 
-  public FunctionProvider(Ids ids) {
-    this.ids = Objects.requireNonNull(ids);
+  @Persisted private final PersistedValue<Long> STATE = PersistedValue.of("state", Long.class);
+  private final CommandInterpreter interpreter;
+
+  public CommandInterpreterFn(CommandInterpreter interpreter) {
+    this.interpreter = Objects.requireNonNull(interpreter);
   }
 
   @Override
-  public StatefulFunction functionOfType(FunctionType functionType) {
-    CommandInterpreter interpreter = new CommandInterpreter(ids);
-    return new CommandInterpreterFn(interpreter);
+  public void invoke(Context context, Object message) {
+    interpreter.interpret(STATE, context, message);
   }
 }

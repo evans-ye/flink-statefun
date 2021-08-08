@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;

@@ -15,17 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import com.google.auto.service.AutoService;
 import java.util.Map;
+import org.apache.flink.statefun.e2e.smoke.Constants;
+import org.apache.flink.statefun.e2e.smoke.Ids;
+import org.apache.flink.statefun.e2e.smoke.ModuleParameters;
 import org.apache.flink.statefun.sdk.spi.StatefulFunctionModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @AutoService(StatefulFunctionModule.class)
-public class EmbeddedModule implements StatefulFunctionModule {
-  public static final Logger LOG = LoggerFactory.getLogger(EmbeddedModule.class);
+public class EmbeddedFnModule implements StatefulFunctionModule {
+  public static final Logger LOG = LoggerFactory.getLogger(EmbeddedFnModule.class);
 
   @Override
   public void configure(Map<String, String> globalConfiguration, Binder binder) {

@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.embedded;
 
 import static org.apache.flink.statefun.e2e.smoke.Utils.awaitVerificationSuccess;
 import static org.apache.flink.statefun.e2e.smoke.Utils.startVerificationServer;
@@ -27,9 +27,9 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HarnessTest {
+public class EmbeddedSmokeHarnessTest {
 
-  private static final Logger LOG = LoggerFactory.getLogger(HarnessTest.class);
+  private static final Logger LOG = LoggerFactory.getLogger(EmbeddedSmokeHarnessTest.class);
 
   @Ignore
   @Test(timeout = 1_000 * 60 * 2)

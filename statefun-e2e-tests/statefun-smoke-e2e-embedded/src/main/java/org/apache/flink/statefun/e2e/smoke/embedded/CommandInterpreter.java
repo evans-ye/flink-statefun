@@ -15,19 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.embedded;
 
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.COMMANDS_TYPE;
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.SOURCE_COMMANDS_TYPE;
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.isTypeOf;
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.packCommands;
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.packVerificationResult;
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.unpackCommands;
-import static org.apache.flink.statefun.e2e.smoke.TypeUtils.unpackSourceCommand;
+import static org.apache.flink.statefun.e2e.smoke.Types.*;
 
 import java.time.Duration;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
+import org.apache.flink.statefun.e2e.smoke.Constants;
+import org.apache.flink.statefun.e2e.smoke.Ids;
 import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;

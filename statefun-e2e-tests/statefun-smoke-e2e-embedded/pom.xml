@@ -28,20 +28,6 @@ under the License.
     <artifactId>statefun-smoke-e2e-embedded</artifactId>
 
     <dependencies>
-        <!-- Stateful Functions -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>statefun-sdk-embedded</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
-        <!-- Protobuf -->
-        <dependency>
-            <groupId>com.google.protobuf</groupId>
-            <artifactId>protobuf-java</artifactId>
-            <version>${protobuf.version}</version>
-        </dependency>
-
         <!-- End-to-end test common -->
         <dependency>
             <groupId>org.apache.flink</groupId>
@@ -109,5 +95,4 @@ under the License.
             </plugin>
         </plugins>
     </build>
-
 </project>
