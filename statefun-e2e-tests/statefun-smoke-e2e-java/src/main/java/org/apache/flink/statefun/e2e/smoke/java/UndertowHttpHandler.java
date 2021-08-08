@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.java;
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;

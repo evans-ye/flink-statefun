@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.java;
 
-import static org.apache.flink.statefun.e2e.smoke.Constants.CMD_INTERPRETER_FN;
+import static org.apache.flink.statefun.e2e.smoke.java.Constants.CMD_INTERPRETER_FN;
 
 import io.undertow.Undertow;
 import org.apache.flink.statefun.sdk.java.StatefulFunctionSpec;

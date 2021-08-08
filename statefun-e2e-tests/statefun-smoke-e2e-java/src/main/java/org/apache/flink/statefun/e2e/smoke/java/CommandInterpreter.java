@@ -16,9 +16,9 @@
  * limitations under the License.
  */
 
-package org.apache.flink.statefun.e2e.smoke;
+package org.apache.flink.statefun.e2e.smoke.java;
 
-import static org.apache.flink.statefun.e2e.smoke.Constants.*;
+import static org.apache.flink.statefun.e2e.smoke.java.Constants.*;
 
 import java.time.Duration;
 import java.util.Objects;
