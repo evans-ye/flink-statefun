@@ -28,10 +28,11 @@ public final class Types {
   private Types() {}
 
   public static final TypeName SOURCE_COMMANDS_TYPE =
-      TypeName.parseFrom(Constants.NAMESPACE + "/sourceCommand");
+      TypeName.parseFrom(Constants.NAMESPACE + "/source-command");
   public static final TypeName VERIFICATION_RESULT_TYPE =
-      TypeName.parseFrom(Constants.NAMESPACE + "/verificationResult");
-  public static final TypeName COMMANDS_TYPE = TypeName.parseFrom("statefun.smoke.e2e/commands");
+      TypeName.parseFrom(Constants.NAMESPACE + "/verification-result");
+  public static final TypeName COMMANDS_TYPE =
+      TypeName.parseFrom(Constants.NAMESPACE + "/commands");
 
   public static boolean isTypeOf(TypedValue value, TypeName type) {
     return value.getTypename().equals(type.canonicalTypenameString());

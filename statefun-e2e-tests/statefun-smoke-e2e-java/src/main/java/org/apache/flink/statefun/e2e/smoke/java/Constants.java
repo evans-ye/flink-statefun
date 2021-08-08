@@ -63,13 +63,13 @@ final class Constants {
 
   static final Type<SourceCommand> SOURCE_COMMAND_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(APP_NAMESPACE, "sourceCommand"),
+          TypeName.typeNameOf(APP_NAMESPACE, "source-command"),
           SourceCommand::toByteArray,
           SourceCommand::parseFrom);
 
   static final Type<VerificationResult> VERIFICATION_RESULT_TYPE =
       SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(APP_NAMESPACE, "verificationResult"),
+          TypeName.typeNameOf(APP_NAMESPACE, "verification-result"),
           VerificationResult::toByteArray,
           VerificationResult::parseFrom);
 }
