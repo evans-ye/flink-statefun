@@ -89,9 +89,7 @@ public final class CommandInterpreter {
       Context context,
       @SuppressWarnings("unused") Command.SendEgress sendEgress) {
     EgressMessage egressMessage =
-        EgressMessageBuilder.forEgress(DISCARD_EGRESS)
-            .withCustomType(COMMAND_TYPE, Command.getDefaultInstance())
-            .build();
+        EgressMessageBuilder.forEgress(DISCARD_EGRESS).withValue("discarded-message").build();
     context.send(egressMessage);
   }
 

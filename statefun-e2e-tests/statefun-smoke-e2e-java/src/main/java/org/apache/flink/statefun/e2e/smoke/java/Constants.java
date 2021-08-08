@@ -18,7 +18,6 @@
 
 package org.apache.flink.statefun.e2e.smoke.java;
 
-import org.apache.flink.statefun.e2e.smoke.generated.Command;
 import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
@@ -50,10 +49,6 @@ final class Constants {
   // =====================================================
   //  Command types
   // =====================================================
-
-  static final Type<Command> COMMAND_TYPE =
-      SimpleType.simpleImmutableTypeFrom(
-          TypeName.typeNameOf(APP_NAMESPACE, "command"), Command::toByteArray, Command::parseFrom);
 
   static final Type<Commands> COMMANDS_TYPE =
       SimpleType.simpleImmutableTypeFrom(
