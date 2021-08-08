@@ -25,7 +25,7 @@ import org.apache.flink.statefun.e2e.smoke.generated.Commands;
 import org.apache.flink.statefun.e2e.smoke.generated.SourceCommand;
 import org.apache.flink.statefun.e2e.smoke.generated.VerificationResult;
 
-class Utils {
+public class Utils {
 
   public static SourceCommand aStateModificationCommand() {
     return aStateModificationCommand(-1234); // the id doesn't matter
@@ -59,7 +59,7 @@ class Utils {
   }
 
   /** Blocks the currently executing thread until enough successful verification results supply. */
-  static void awaitVerificationSuccess(
+  public static void awaitVerificationSuccess(
       Supplier<VerificationResult> results, final int numberOfFunctionInstances) {
     Set<Integer> successfullyVerified = new HashSet<>();
     while (successfullyVerified.size() != numberOfFunctionInstances) {
@@ -79,7 +79,7 @@ class Utils {
   }
 
   /** starts a simple verification TCP server that accepts {@link com.google.protobuf.Any}. */
-  static SimpleVerificationServer.StartedServer startVerificationServer() {
+  public static SimpleVerificationServer.StartedServer startVerificationServer() {
     SimpleVerificationServer server = new SimpleVerificationServer();
     return server.start();
   }
