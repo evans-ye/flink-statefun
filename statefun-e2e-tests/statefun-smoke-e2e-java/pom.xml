@@ -19,9 +19,10 @@ under the License.
          xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>statefun-e2e-tests</artifactId>
         <groupId>org.apache.flink</groupId>
+        <artifactId>statefun-smoke-e2e-multilang-base</artifactId>
         <version>3.1-SNAPSHOT</version>
+        <relativePath>../statefun-smoke-e2e-multilang-base/pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -44,23 +45,6 @@ under the License.
             <artifactId>protobuf-java</artifactId>
             <version>${protobuf.version}</version>
         </dependency>
-
-        <!-- End-to-end test common -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>statefun-e2e-tests-common</artifactId>
-            <version>${project.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- smoke end-to-end common -->
-        <dependency>
-            <groupId>org.apache.flink</groupId>
-            <artifactId>statefun-smoke-e2e-driver</artifactId>
-            <version>3.1-SNAPSHOT</version>
-            <type>test-jar</type>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 
     <build>
@@ -76,7 +60,7 @@ under the License.
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>org.apache.flink.statefun.e2e.smoke.CommandInterpreterAppServer</mainClass>
+                            <mainClass>org.apache.flink.statefun.e2e.smoke.java.CommandInterpreterAppServer</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -91,30 +75,29 @@ under the License.
                 </executions>
             </plugin>
 
-            <!-- download smoke e2e common jar for launching flink statefun cluster -->
+            <!-- Generate the Command messages -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
+                <groupId>com.github.os72</groupId>
+                <artifactId>protoc-jar-maven-plugin</artifactId>
+                <version>${protoc-jar-maven-plugin.version}</version>
                 <executions>
                     <execution>
+                        <id>generate-protobuf-sources</id>
+                        <phase>generate-sources</phase>
                         <goals>
-                            <goal>copy</goal>
+                            <goal>run</goal>
                         </goals>
+                        <configuration>
+                            <includeStdTypes>true</includeStdTypes>
+                            <protocVersion>${protobuf.version}</protocVersion>
+                            <cleanOutputFolder>true</cleanOutputFolder>
+                            <inputDirectories>
+                                <inputDirectory>src/main/protobuf</inputDirectory>
+                            </inputDirectories>
+                            <outputDirectory>${basedir}/target/generated-sources/protoc-jar</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <artifactItems>
-                        <artifactItem>
-                            <groupId>org.apache.flink</groupId>
-                            <artifactId>statefun-smoke-e2e-driver</artifactId>
-                            <version>${project.version}</version>
-                            <type>jar</type>
-                            <overWrite>true</overWrite>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
-                            <destFileName>statefun-smoke-e2e-driver.jar</destFileName>
-                        </artifactItem>
-                    </artifactItems>
-                </configuration>
             </plugin>
         </plugins>
     </build>
