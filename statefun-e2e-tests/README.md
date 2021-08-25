@@ -59,8 +59,8 @@ Generate language specific protobuf message bindings using the ``commands.proto`
 * Run ``MultiLangSmokeHarnessTest`` under _statefun-smoke-e2e-multilang-harness_ to test out your implementation.
 
 ## Step 5: Implement the SmokeVerificationE2E
-* Implement the language SDK's version of ``SmokeVerificationE2E``. One just need to focus on preparing resources for launching language specific HTTP endpoint in the ``configureRemoteFunction`` method.
-* Create ``Dockerfile.remote-function`` under ``src/test/resources``, which takes the resources prepared by ``SmokeVerificationE2E`` and launches the ``CommandInterpreterFn`` HTTP endpoint in the container.
+* Implement the language SDK's version of ``SmokeVerificationE2E``. One should mostly focus on preparing resources for launching language specific HTTP endpoint in the ``configureRemoteFunction`` method.
+* Create a ``Dockerfile.remote-function`` under ``src/test/resources``, which takes the resources prepared by ``SmokeVerificationE2E`` and launches the ``CommandInterpreterFn`` HTTP endpoint in the container.
 * The ``SmokeRunner`` orchestrates the Smoke E2E runtime by doing the following:
   * Launch the Flink StateFun cluster, which is defined by ``StatefulFunctionsAppContainers.Builder``.
   * Launch ``SimpleVerificationServer`` that collects the verification results.
