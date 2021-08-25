@@ -30,6 +30,15 @@ This module contains a generic ``pom.xml`` that have the dependencies and the dr
 ### statefun-smoke-e2e-multilang-harness
 The harness test that can be ran directly by JUnit. Noted that one should have a remote function running at localhost 8000 port before running the harness test.
 
+# Behind the Scene
+* The ``SmokeRunner`` orchestrates the Smoke E2E runtime and does the following:
+  * Launch the Flink StateFun cluster, which is defined by ``StatefulFunctionsAppContainers.Builder``.
+  * The ``CommandGenerator`` wrapped by ``CommandFlinkSource`` starts to generate commands and then sent over to the remote functions for state manipulations(counters). At the same time it also applies the command internally to its internal states.
+  * After commands are generated, The ``CommandFlinkSource`` enters the verification stage and starts to send out ``VerificationResult`` messages along with the counts stored in its internal states as expected counts.
+  * The remote functions received ``VerificationResult`` messages and attach the counts from states as actual counts.
+  * The ``VerificationResult`` messages are then sent to ``SocketClientSink``, and further sent to ``SimpleVerificationServer`` that collects the verification results.
+  * The ``awaitVerificationSuccess`` method in ``SmokeRunner`` keeps polling the result arrived at ``SimpleVerificationServer`` and verifies it by simply doing actual == expected. When all the messages are successfully verified. The program exits.
+
 # Adding Smoke E2E for a Language SDK
 For the steps below, take _statefun-smoke-e2e-golang_ module as a reference implementation. You can copy the static config files from there as well.
 
@@ -61,7 +70,4 @@ Generate language specific protobuf message bindings using the ``commands.proto`
 ## Step 5: Implement the SmokeVerificationE2E
 * Implement the language SDK's version of ``SmokeVerificationE2E``. One should mostly focus on preparing resources for launching language specific HTTP endpoint in the ``configureRemoteFunction`` method.
 * Create a ``Dockerfile.remote-function`` under ``src/test/resources``, which takes the resources prepared by ``SmokeVerificationE2E`` and launches the ``CommandInterpreterFn`` HTTP endpoint in the container.
-* The ``SmokeRunner`` orchestrates the Smoke E2E runtime by doing the following:
-  * Launch the Flink StateFun cluster, which is defined by ``StatefulFunctionsAppContainers.Builder``.
-  * Launch ``SimpleVerificationServer`` that collects the verification results.
-  * Wait until verification succeed and exit out.
+* Run the Smoke E2E test.
