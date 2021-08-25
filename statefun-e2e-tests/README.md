@@ -1,4 +1,4 @@
-# Smoke E2E Test Framework
+# Smoke E2E Test
 
 ## Runtime Architecture
 
@@ -31,7 +31,7 @@ This module contains a generic ``pom.xml`` that have the dependencies and the dr
 The harness test that can be ran directly by JUnit. Noted that one should have a remote function running at localhost 8000 port before running the harness test.
 
 # Adding Smoke E2E for a Language SDK
-For the steps below, take _statefun-smoke-e2e-golang_ module as an implementation reference. You can copy the static config files from there as well.
+For the steps below, take _statefun-smoke-e2e-golang_ module as a reference implementation. You can copy the static config files from there as well.
 
 ## Step 1: Add a new module
 * Make _statefun-smoke-e2e-multilang-base_ as parent of new module's ``pom.xml``.
@@ -46,15 +46,15 @@ For the steps below, take _statefun-smoke-e2e-golang_ module as an implementatio
 * Copy ``commands.proto`` into ``src/main/protobuf``.
 * Copy ``remote-module/module.yaml``, ``Dockerfile``, ``log4j.properties`` into ``src/test/resources``.
 
-## Step 2: Generate protobuf messages
+## Step 2: Generate the protobuf messages
 Generate language specific protobuf message bindings using the ``commands.proto`` definition.
 
-## Step 3: Implement CommandInterpreterFn and expose it as an HTTP endpoint
-* Code up ``CommandInterpreterFn`` using the language SDK. It's a remote function implementation that performs state manipulation based on the commands received. One can mimic the logic by looking into other Smoke E2E implementations.
+## Step 3: Implement the CommandInterpreterFn and an HTTP endpoint
+* Code up ``CommandInterpreterFn`` using the specific language SDK. It's a remote function that performs state manipulation based on the commands received. One can mimic the logic by looking into other Smoke E2E implementations.
 * Make sure the typename of remote function, messages, ingress/ingress are all aligned with the driver's definition.
 * Wrap the ``CommandInterpreterFn`` as an HTTP endpoint using a simple web container.
 
-## Step 4: Test via Harness
+## Step 4: Run the Harness Test
 * Run Step 3's ``CommandInterpreterFn`` HTTP endpoint at localhost 8000 port.
 * Run ``MultiLangSmokeHarnessTest`` under _statefun-smoke-e2e-multilang-harness_ to test out your implementation.
 
