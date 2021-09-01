@@ -3,23 +3,24 @@
 ## Runtime Architecture
 
 ```
-CommandFlinkSource -> StateFun Core -> SocketSink -> SimpleVerificationServer
-(CommandGenerator)         ^
-                           |
-                           ˇ
-                     Remote Functions
-                   (CommandInterpreter)
+Flnik StateFun cluster -> SimpleVerificationServer
+    (Containers)              (Junit Process)
+          ^
+          |
+          ˇ
+   Remote Function
+    (Container)
 ```
 
+The ``SmokeRunner`` orchestrates the entire Smoke E2E runtime and does the following:
+* Launch the Flink StateFun cluster and the remote function, those aredefined by ``StatefulFunctionsAppContainers.Builder`` and passed to the ``SmokeRunner``. The detailed configuration can be found in concrete implementation such as SmokeVerificationJavaE2E
+* The ``CommandGenerator`` wrapped by ``CommandFlinkSource`` starts to generate commands and then sent over to the remote functions for state manipulations(counters). At the same time it also applies the command internally to its internal states.
+* After commands are generated, The ``CommandFlinkSource`` enters the verification stage and starts to send out ``VerificationResult`` messages along with the counts stored in its internal states as expected counts.
+* The remote functions received ``VerificationResult`` messages and attach the counts from states as actual counts.
+* The ``VerificationResult`` messages are then sent to ``SocketClientSink``, and further sent to ``SimpleVerificationServer`` that collects the verification results.
+* The ``awaitVerificationSuccess`` method in ``SmokeRunner`` keeps polling the result arrived at ``SimpleVerificationServer`` and verifies it by simply doing actual == expected. When all the messages are successfully verified. The program exits.
+
 ## Framework Modules
-### statefun-e2e-tests-common
-The generic ``StatefulFunctionsAppContainers`` implementation which is used to spawn up the Flink cluster and other external services(such as remote functions or Kafka) as Docker containers.
-
-### statefun-smoke-e2e-common
-Testing utilities:
-* ``SmokeRunner``: facet class that organizes the Smoke E2E runtime architecture.
-* ``SimpleVerificationServer``: takes the ``VerificationResult`` messages and performs the verification.
-
 ### statefun-smoke-e2e-driver
 The core logic of the testing framework which generates a series of command and verification messages via ``CommandGenerator``.
 The driver code here is built into a self-contained jar that can be loaded and ran by the Flink StateFun cluster directly. 
@@ -29,15 +30,6 @@ This module contains a generic ``pom.xml`` that have the dependencies and the dr
 
 ### statefun-smoke-e2e-multilang-harness
 The harness test that can be ran directly by JUnit. Noted that one should have a remote function running at localhost 8000 port before running the harness test.
-
-# Behind the Scene
-* The ``SmokeRunner`` orchestrates the Smoke E2E runtime and does the following:
-  * Launch the Flink StateFun cluster, which is defined by ``StatefulFunctionsAppContainers.Builder``.
-  * The ``CommandGenerator`` wrapped by ``CommandFlinkSource`` starts to generate commands and then sent over to the remote functions for state manipulations(counters). At the same time it also applies the command internally to its internal states.
-  * After commands are generated, The ``CommandFlinkSource`` enters the verification stage and starts to send out ``VerificationResult`` messages along with the counts stored in its internal states as expected counts.
-  * The remote functions received ``VerificationResult`` messages and attach the counts from states as actual counts.
-  * The ``VerificationResult`` messages are then sent to ``SocketClientSink``, and further sent to ``SimpleVerificationServer`` that collects the verification results.
-  * The ``awaitVerificationSuccess`` method in ``SmokeRunner`` keeps polling the result arrived at ``SimpleVerificationServer`` and verifies it by simply doing actual == expected. When all the messages are successfully verified. The program exits.
 
 # Adding Smoke E2E for a Language SDK
 For the steps below, take _statefun-smoke-e2e-golang_ module as a reference implementation. You can copy the static config files from there as well.
