@@ -34,20 +34,21 @@ option go_package = ".;app";
 * Finally, wrap the ``CommandInterpreterFn`` as an HTTP endpoint using a simple web container. The endpoint should listen on 8000 port(aligned with the ``module.yaml`` setting).
 
 ### Step 3: Orchestrate pieces into a SmokeVerificationE2E
-* Create a language specific ``SmokeVerificationE2E`` under ``src/test/java``. Most of the code can just be copied from other Smoke E2E implementations. Particularly, you should focus on preparing resources for launching the language specific HTTP endpoint in the ``configureRemoteFunction`` method.
-* Next, create a ``Dockerfile.remote-function`` under ``src/test/resources``, which builds the resources prepared by ``SmokeVerificationE2E`` into a Docker image. The image is then launched as an HTTP endpoint inside the container serving the ``CommandInterpreterFn``.
+* Create a language specific SmokeVerificationE2E under ``src/test/java``. Most of the code can just be copied from other Smoke E2E implementations. Particularly, you should focus on preparing resources for launching the language specific HTTP endpoint in the ``configureRemoteFunction`` method.
+* Next, create a ``Dockerfile.remote-function`` under ``src/test/resources``, which builds the resources prepared by SmokeVerificationE2E into a Docker image. The image is then launched as an HTTP endpoint inside the container serving the ``CommandInterpreterFn``.
 
 ## Execution
-### Run the Harness test
-* The Harness test is to run the Smoke E2E test as a JUnit process against the remote function. A nice feature it provides is you can run both the Harness and the remote function on IDE, therefore allows you can mark breakpoints on either the Smoke E2E process or the remote function process.
-^^^ TO THIS END ^^^
-* To run the harness test against different language SDK:
-  * Startup the HTTP endpoint that serve the remote function(implemented in Step 2) at 
-  * ``MultiLangSmokeHarnessTest`` under _statefun-smoke-e2e-multilang-harness
-* Run Step 3's ``CommandInterpreterFn`` HTTP endpoint at localhost 8000 port.
-_ to test out your implementation.
+### Running the Harness test
+* The Harness test is to run the Smoke E2E test as a JUnit process against the remote function Java process. A nice feature it provides is you can run both the Harness and the remote function on an IDE, therefore allows you to set breakpoints on either one and debug the code efficiently.
+* How To:
+  * Startup the HTTP endpoint that serve the remote function(implemented in Step 2) at port 8000, which align with the module.yaml resides in ``src/test/java/resources`` under _statefun-smoke-e2e-multilang-harness_.
+  * Comment out ``@Ignore`` in ``MultiLangSmokeHarnessTest``.
+  * Run ``MultiLangSmokeHarnessTest``.
+* Noted that the Harness only requires Step 1 and Step 2 to be implemented, hence you can use the Harness to test drive your implementation as well.
 
-## Run the Smoke E2E test
+## Running the SmokeVerificationE2E
+* The SmokeVerificationE2E, unlike Harness, spawn up the Flink cluster(Master, Workers) and the remote function as dedicated containers for testing. The setup is to simulate the production environment.
+* Once the Step 1,2,3 are implemented, you should be able to run the language specific SmokeVerificationE2E directly.
 
 # Architecture
 
@@ -84,4 +85,4 @@ The driver code here is built into a self-contained jar that can be loaded and r
 This module contains a generic ``pom.xml`` that have the dependencies and the driver jar downloaded to run Smoke E2E.
 
 ## _statefun-smoke-e2e-multilang-harness_
-The harness test that can be ran directly by JUnit. Noted that one should have a remote function running at localhost 8000 port before running the harness test.
+The Harness test that run the Smoke E2E as a JUnit process. Noted that one should have a remote function running at localhost 8000 port for Harness test to interact with.
